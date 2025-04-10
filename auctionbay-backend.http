@@ -1,0 +1,6 @@
+@auctionbay_backend_HostAddress = http://localhost:5166
+
+GET {{auctionbay_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
