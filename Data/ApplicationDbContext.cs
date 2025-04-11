@@ -15,6 +15,9 @@ namespace auctionbay_backend.Data
         // public DbSet<Auction> Auctions { get; set; }
         // public DbSet<Bid> Bids { get; set; }
 
+        public DbSet<Auction> Auctions { get; set; }
+        public DbSet<Bid> Bids { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
