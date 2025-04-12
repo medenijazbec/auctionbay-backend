@@ -101,16 +101,17 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuctionBay API V1");
-     
     });
 }
+
+//enable serving static files (e.g., images uploaded by users)
+app.UseStaticFiles();
 
 app.UseRouting();
 app.UseHttpsRedirection();
