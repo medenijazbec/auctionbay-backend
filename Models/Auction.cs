@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 
 namespace auctionbay_backend.Models
 {
@@ -17,6 +16,9 @@ namespace auctionbay_backend.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public string MainImageUrl { get; set; } = string.Empty;
+
+        //property to store image binary data in the database.
+        public byte[]? MainImageData { get; set; }
 
         //Navigation: an auction can have many bids.
         public ICollection<Bid> Bids { get; set; } = new List<Bid>();
