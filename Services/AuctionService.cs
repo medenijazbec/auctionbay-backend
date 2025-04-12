@@ -17,8 +17,7 @@ namespace auctionbay_backend.Services
             _dbContext = dbContext;
         }
 
-        // Create a new auction by the specified user.
-        public async Task<Auction> CreateAuctionAsync(string userId, AuctionCreateDto dto)
+        public async Task<AuctionResponseDto> CreateAuctionAsync(string userId, AuctionCreateDto dto)
         {
             var auction = new Auction
             {
@@ -35,23 +34,20 @@ namespace auctionbay_backend.Services
 
             _dbContext.Auctions.Add(auction);
             await _dbContext.SaveChangesAsync();
-            return auction;
+            return MapAuctionToResponseDto(auction);
         }
 
-        // Update an auction – only if the auction was created by the given user.
-        public async Task<Auction> UpdateAuctionAsync(string userId, int auctionId, AuctionUpdateDto dto)
+        public async Task<AuctionResponseDto> UpdateAuctionAsync(string userId, int auctionId, AuctionUpdateDto dto)
         {
             var auction = await _dbContext.Auctions.FirstOrDefaultAsync(a => a.AuctionId == auctionId);
             if (auction == null)
             {
                 throw new Exception("Auction not found.");
             }
-
             if (auction.CreatedBy != userId)
             {
                 throw new Exception("You are not authorized to update this auction.");
             }
-
             auction.Title = dto.Title;
             auction.Description = dto.Description;
             auction.StartingPrice = dto.StartingPrice;
@@ -61,11 +57,10 @@ namespace auctionbay_backend.Services
             auction.UpdatedAt = DateTime.UtcNow;
 
             await _dbContext.SaveChangesAsync();
-            return auction;
+            return MapAuctionToResponseDto(auction);
         }
 
-        // Place a bid on an auction.
-        public async Task<Bid> PlaceBidAsync(string userId, int auctionId, BidDto dto)
+        public async Task<BidDto> PlaceBidAsync(string userId, int auctionId, BidDto dto)
         {
             var auction = await _dbContext.Auctions.FirstOrDefaultAsync(a => a.AuctionId == auctionId);
             if (auction == null)
@@ -73,7 +68,8 @@ namespace auctionbay_backend.Services
                 throw new Exception("Auction not found.");
             }
 
-            // Optionally: enforce bidding rules (e.g., bid must be higher than current highest bid).
+            // Enforce bidding rules: bid must be at least 1 unit higher than current highest bid,
+            // or at least equal to starting price if no bids exist.
             var highestBid = await _dbContext.Bids
                 .Where(b => b.AuctionId == auctionId)
                 .OrderByDescending(b => b.Amount)
@@ -95,16 +91,48 @@ namespace auctionbay_backend.Services
 
             _dbContext.Bids.Add(bid);
             await _dbContext.SaveChangesAsync();
-            return bid;
+            // Return the bid amount (you could also return additional bid details if desired)
+            return new BidDto { Amount = bid.Amount };
         }
 
-        // Get active auctions ordered by EndDateTime ascending.
-        public async Task<IEnumerable<Auction>> GetActiveAuctionsAsync()
+        public async Task<IEnumerable<AuctionResponseDto>> GetActiveAuctionsAsync()
         {
-            return await _dbContext.Auctions
+            var auctions = await _dbContext.Auctions
+                .Include(a => a.Bids)
                 .Where(a => a.AuctionState == "Active" && a.EndDateTime > DateTime.UtcNow)
                 .OrderBy(a => a.EndDateTime)
                 .ToListAsync();
+            return auctions.Select(a => MapAuctionToResponseDto(a));
+        }
+
+        public async Task<IEnumerable<AuctionResponseDto>> GetAuctionsByUserAsync(string userId)
+        {
+            var auctions = await _dbContext.Auctions
+                .Include(a => a.Bids)
+                .Where(a => a.CreatedBy == userId)
+                .OrderByDescending(a => a.CreatedAt)
+                .ToListAsync();
+            return auctions.Select(a => MapAuctionToResponseDto(a));
+        }
+
+        private AuctionResponseDto MapAuctionToResponseDto(Auction auction)
+        {
+            return new AuctionResponseDto
+            {
+                AuctionId = auction.AuctionId,
+                Title = auction.Title,
+                Description = auction.Description,
+                StartingPrice = auction.StartingPrice,
+                StartDateTime = auction.StartDateTime,
+                EndDateTime = auction.EndDateTime,
+                AuctionState = auction.AuctionState,
+                CreatedBy = auction.CreatedBy,
+                CreatedAt = auction.CreatedAt,
+                MainImageUrl = auction.MainImageUrl,
+                CurrentHighestBid = auction.Bids.Any() ? auction.Bids.Max(b => b.Amount) : auction.StartingPrice,
+                TimeLeft = auction.EndDateTime > DateTime.UtcNow ? auction.EndDateTime - DateTime.UtcNow : TimeSpan.Zero,
+                Bids = auction.Bids.Select(b => new BidDto { Amount = b.Amount }).ToList()
+            };
         }
     }
 }

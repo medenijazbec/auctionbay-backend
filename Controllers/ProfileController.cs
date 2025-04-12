@@ -40,6 +40,19 @@ namespace auctionbay_backend.Controllers
             });
         }
 
+        //GET: api/Profile/auctions
+        //Returns the auctions the current user (seller) created, along with bid histories.
+        [HttpGet("auctions")]
+        public async Task<IActionResult> GetMyAuctions()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (user == null)
+                return Unauthorized();
+
+            var auctions = await _auctionService.GetAuctionsByUserAsync(user.Id);
+            return Ok(auctions);
+        }
+
         // POST: api/Profile/auction
         [HttpPost("auction")]
         public async Task<IActionResult> CreateAuction([FromBody] AuctionCreateDto dto)

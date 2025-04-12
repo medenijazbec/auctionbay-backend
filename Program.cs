@@ -108,7 +108,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuctionBay API V1");
-        // You can set RoutePrefix = "" to serve Swagger UI at the app's root.
+     
     });
 }
 

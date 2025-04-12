@@ -10,7 +10,7 @@ namespace auctionbay_backend.Models
         public decimal Amount { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.UtcNow;
 
-        // Navigation properties (optional)
+        //navigation properties 
         public Auction Auction { get; set; }
         public ApplicationUser User { get; set; }
     }
