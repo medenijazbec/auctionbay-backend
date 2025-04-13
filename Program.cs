@@ -11,7 +11,23 @@ using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure DB Context with MySQL.
+
+
+
+// Add CORS support
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+          .AllowAnyOrigin()      
+          .AllowAnyHeader()     
+          .AllowAnyMethod();     
+    });
+});
+
+
+//configure DB Context with MySQL.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -57,6 +73,9 @@ builder.Services.AddAuthentication(options =>
 //register custom authentication service
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<IAuctionService, AuctionService>();//forgot to add
+
+
 //add controllers and endpoints explorer
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -101,6 +120,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+
+app.UseCors("AllowAll");
+
+
+
+
 
 if (app.Environment.IsDevelopment())
 {
