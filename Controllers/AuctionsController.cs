@@ -42,11 +42,11 @@ namespace auctionbay_backend.Controllers
             }
         }
 
-        // GET: api/Auctions
+        // GET: api/Auctions?page=1&pageSize=9
         [HttpGet]
-        public async Task<IActionResult> GetActiveAuctions()
+        public async Task<IActionResult> GetActiveAuctions([FromQuery] int page = 1, [FromQuery] int pageSize = 9)
         {
-            var auctions = await _auctionService.GetActiveAuctionsAsync();
+            var auctions = await _auctionService.GetActiveAuctionsAsync(page, pageSize);
             return Ok(auctions);
         }
     }

@@ -68,8 +68,8 @@ namespace auctionbay_backend.Services
                 throw new Exception("Auction not found.");
             }
 
-            // Enforce bidding rules: bid must be at least 1 unit higher than current highest bid,
-            // or at least equal to starting price if no bids exist.
+            //Enforce bidding rules: the bid must be at least 1 unit higher than the current highest bid,
+            //or at least equal to the starting price if no bids exist.
             var highestBid = await _dbContext.Bids
                 .Where(b => b.AuctionId == auctionId)
                 .OrderByDescending(b => b.Amount)
@@ -91,16 +91,18 @@ namespace auctionbay_backend.Services
 
             _dbContext.Bids.Add(bid);
             await _dbContext.SaveChangesAsync();
-            // Return the bid amount (you could also return additional bid details if desired)
             return new BidDto { Amount = bid.Amount };
         }
 
-        public async Task<IEnumerable<AuctionResponseDto>> GetActiveAuctionsAsync()
+        //Updated GetActiveAuctionsAsync method with pagination
+        public async Task<IEnumerable<AuctionResponseDto>> GetActiveAuctionsAsync(int page, int pageSize)
         {
             var auctions = await _dbContext.Auctions
                 .Include(a => a.Bids)
                 .Where(a => a.AuctionState == "Active" && a.EndDateTime > DateTime.UtcNow)
                 .OrderBy(a => a.EndDateTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
             return auctions.Select(a => MapAuctionToResponseDto(a));
         }
