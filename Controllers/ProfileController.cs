@@ -25,68 +25,73 @@ namespace auctionbay_backend.Controllers
         }
 
         /* ─────────────────── helpers ─────────────────── */
-        private async Task<ApplicationUser?> CurrentUserAsync()
+        private Task<ApplicationUser?> CurrentUserAsync()
         {
-            // 1) first try the custom "id" claim we issued when logging‑in
-            var id = User.FindFirstValue("id");
-
-            // 2) fall back to the standard NameIdentifier if you ever add it
-            id ??= User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            return id is null ? null : await _userManager.FindByIdAsync(id);
+            var id = User.FindFirstValue("id") ??
+                     User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return id is null ? Task.FromResult<ApplicationUser?>(null)
+                              : _userManager.FindByIdAsync(id);
         }
 
         //  GET api/Profile/me
         [HttpGet("me")]
-        public async Task<IActionResult> GetProfile()
+        public async Task<IActionResult> GetMe()
         {
             var user = await CurrentUserAsync();
             if (user is null) return Unauthorized();
 
             return Ok(new
             {
-                user.Id,
-                user.Email,
-                user.FirstName,
-                user.LastName,
-                user.ProfilePictureUrl
+                id = user.Id,
+                email = user.Email,
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                profilePictureUrl = user.ProfilePictureUrl
             });
+
         }
 
 
         //  PUT api/Profile/me
         [HttpPut("me")]
-        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDto dto)
+        public async Task<IActionResult> UpdateMe([FromBody] UpdateProfileDto dto)
         {
             var user = await CurrentUserAsync();
             if (user is null) return Unauthorized();
 
-            /* avoid e‑mail duplicates */
+            /*unique‑email check (ignore same user) */
             if (!string.Equals(user.Email, dto.Email, StringComparison.OrdinalIgnoreCase))
             {
-                var exists = await _userManager.FindByEmailAsync(dto.Email);
-                if (exists is not null) return Conflict(new { error = "E‑mail already taken." });
+                var existing = await _userManager.FindByEmailAsync(dto.Email);
+                if (existing != null)
+                    return Conflict(new { error = "E‑mail already taken." });
             }
 
+            /*apply changes */
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
             user.Email = dto.Email;
-            user.UserName = dto.Email;                 // keep Identity happy
-
-            if (!string.IsNullOrWhiteSpace(dto.ProfilePictureUrl))
+            user.UserName = dto.Email;           // keep Identity happy
+            if (dto.ProfilePictureUrl is not null)
                 user.ProfilePictureUrl = dto.ProfilePictureUrl;
 
+            /*persist & propagate errors clearly */
             var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!result.Succeeded)
+            {
+                var first = result.Errors.FirstOrDefault();
+                return BadRequest(new { error = first?.Description ?? "Update failed." });
+            }
 
             return Ok(new
             {
-                user.Id,
-                user.Email,
-                user.FirstName,
-                user.LastName,
-                user.ProfilePictureUrl
+                id = user.Id,
+                email = user.Email,
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                profilePictureUrl = user.ProfilePictureUrl
             });
+
         }
 
 

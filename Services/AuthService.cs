@@ -77,33 +77,39 @@ namespace auctionbay_backend.Services
             return GenerateJwtToken(user);
         }
 
-        //generate a JWT token for the authenticated user
+        // AuthService.cs  – GenerateJwtToken
         private string GenerateJwtToken(ApplicationUser user)
         {
-            var jwtSettings = _configuration.GetSection("Jwt").Get<JwtSettings>();
-            var key = Encoding.UTF8.GetBytes(jwtSettings.Key);
+            var jwt = _configuration.GetSection("Jwt").Get<JwtSettings>();
+            var key = Encoding.UTF8.GetBytes(jwt.Key);
 
             var claims = new List<Claim>
-              {
-                   new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                   new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                   new Claim(ClaimTypes.NameIdentifier, user.Id),//fixed the default "there" user name profile wasnt being sent correctly
+    {
+        new Claim(JwtRegisteredClaimNames.Sub,  user.Email),
+        new Claim(JwtRegisteredClaimNames.Jti,  Guid.NewGuid().ToString()),
 
-              };
+        //this one is ALREADY enough for Identity
+        new Claim(ClaimTypes.NameIdentifier,    user.Id),
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(jwtSettings.ExpiresInMinutes),
-                Issuer = jwtSettings.Issuer,
-                Audience = jwtSettings.Audience,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+        // add an explicit “id” so ProfileController can pick it up first try
+        new Claim("id",                         user.Id)
+    };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var token = new JwtSecurityTokenHandler().CreateToken(
+                new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.UtcNow.AddMinutes(jwt.ExpiresInMinutes),
+                    Issuer = jwt.Issuer,
+                    Audience = jwt.Audience,
+                    SigningCredentials = new SigningCredentials(
+                                            new SymmetricSecurityKey(key),
+                                            SecurityAlgorithms.HmacSha256)
+                });
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
         //Forgot password: generate a password reset token and  TODO: email it
         public async Task<IdentityResult> ForgotPasswordAsync(ForgotPasswordDto dto)
