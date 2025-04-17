@@ -102,6 +102,13 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API endpoints for the AuctionBay application."
     });
 
+    c.MapType<IFormFile>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "binary"
+    });
+
+
     //define the JWT Bearer authentication scheme
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
