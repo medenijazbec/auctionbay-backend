@@ -77,7 +77,12 @@ builder.Services.AddScoped<IAuctionService, AuctionService>();//forgot to add
 
 
 //add controllers and endpoints explorer
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+    {
+        o.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+        o.JsonSerializerOptions.DictionaryKeyPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+    });
 builder.Services.AddEndpointsApiExplorer();
 
 //configure Swagger with JWT support
@@ -150,6 +155,23 @@ app.MapControllers();
 await SeedDatabaseAsync(app);
 
 app.Run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #region SEEDING
 static async Task SeedDatabaseAsync(WebApplication app)

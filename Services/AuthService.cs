@@ -87,7 +87,8 @@ namespace auctionbay_backend.Services
               {
                    new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                   new Claim("id", user.Id)
+                   new Claim(ClaimTypes.NameIdentifier, user.Id),//fixed the default "there" user name profile wasnt being sent correctly
+
               };
 
             var tokenDescriptor = new SecurityTokenDescriptor
