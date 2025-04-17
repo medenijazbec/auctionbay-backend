@@ -1,6 +1,7 @@
-﻿// Controllers/ImageUploadController.cs
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,46 +10,36 @@ namespace auctionbay_backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]                    
     public class ImageUploadController : ControllerBase
     {
-        // POST: api/ImageUpload
+        private readonly IWebHostEnvironment _env;
+        public ImageUploadController(IWebHostEnvironment env) => _env = env;
+
+        // POST api/ImageUpload
+        // multipart/form‑data  { file: <blob> }
         [HttpPost]
-        public async Task<IActionResult> UploadImage(IFormFile file)
+        public async Task<IActionResult> Upload([FromForm] IFormFile file)
         {
-            if (file == null || file.Length == 0)
-            {
-                return BadRequest(new { error = "No file was provided." });
-            }
+            if (file is null || file.Length == 0)
+                return BadRequest(new { error = "No file provided." });
 
-            try
-            {
-                //Ensure the wwwroot/images folder exists - pol bo to mak questionable 
-                var imagesFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-                if (!Directory.Exists(imagesFolder))
-                {
-                    Directory.CreateDirectory(imagesFolder);
-                }
+            // 1. ensure /wwwroot/images exists
+            var images = Path.Combine(_env.WebRootPath, "images");
+            if (!Directory.Exists(images))
+                Directory.CreateDirectory(images);
 
-                //generate a unique file name
-                var fileExtension = Path.GetExtension(file.FileName);
-                var fileName = $"{Guid.NewGuid()}{fileExtension}";
-                var filePath = Path.Combine(imagesFolder, fileName);
+            // 2. save with a GUID name to avoid collisions
+            var ext = Path.GetExtension(file.FileName);        // keeps .png / .jpg …
+            var fileName = $"{Guid.NewGuid():N}{ext}";
+            var path = Path.Combine(images, fileName);
 
-                //save the file locally
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
+            await using (var stream = System.IO.File.Create(path))
+                await file.CopyToAsync(stream);
 
-                //construct the file's relative URL (assuming static files are served from wwwroot)
-                var fileUrl = $"/images/{fileName}";
-
-                return Ok(new { url = fileUrl, message = "Image uploaded successfully." });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message });
-            }
+            // 3. return the public URL
+            var url = $"/images/{fileName}";
+            return Ok(new { url });
         }
     }
 }

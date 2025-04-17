@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using System.IO;
 using System.Security.Claims;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -135,6 +136,13 @@ var app = builder.Build();
 
 app.UseCors("AllowAll");
 
+//serve wwwroot/images at /images/*
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(                 //*where* to look dsioajdhuaiwsgdgzauw
+        Path.Combine(builder.Environment.WebRootPath, "images")),
+    RequestPath = "/images"                                  //same public URL
+});
 
 
 
@@ -156,6 +164,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.UseStaticFiles();
 
 //vall the seeding method after building but before running
 await SeedDatabaseAsync(app);

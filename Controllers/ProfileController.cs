@@ -59,29 +59,23 @@ namespace auctionbay_backend.Controllers
             var user = await CurrentUserAsync();
             if (user is null) return Unauthorized();
 
-            /*unique‑email check (ignore same user) */
-            if (!string.Equals(user.Email, dto.Email, StringComparison.OrdinalIgnoreCase))
+            // only touch fields that were sent
+            if (dto.FirstName != null) user.FirstName = dto.FirstName;
+            if (dto.LastName != null) user.LastName = dto.LastName;
+            if (!string.IsNullOrWhiteSpace(dto.Email))
             {
-                var existing = await _userManager.FindByEmailAsync(dto.Email);
-                if (existing != null)
+                if (!string.Equals(user.Email, dto.Email, StringComparison.OrdinalIgnoreCase) &&
+                    await _userManager.FindByEmailAsync(dto.Email) is not null)
                     return Conflict(new { error = "E‑mail already taken." });
-            }
 
-            /*apply changes */
-            user.FirstName = dto.FirstName;
-            user.LastName = dto.LastName;
-            user.Email = dto.Email;
-            user.UserName = dto.Email;           // keep Identity happy
-            if (dto.ProfilePictureUrl is not null)
-                user.ProfilePictureUrl = dto.ProfilePictureUrl;
-
-            /*persist & propagate errors clearly */
-            var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded)
-            {
-                var first = result.Errors.FirstOrDefault();
-                return BadRequest(new { error = first?.Description ?? "Update failed." });
+                user.Email = dto.Email;
+                user.UserName = dto.Email;
             }
+            if (dto.ProfilePictureUrl != null) user.ProfilePictureUrl = dto.ProfilePictureUrl;
+
+            var res = await _userManager.UpdateAsync(user);
+            if (!res.Succeeded)
+                return BadRequest(res.Errors.FirstOrDefault()?.Description ?? "Update failed.");
 
             return Ok(new
             {
@@ -91,8 +85,8 @@ namespace auctionbay_backend.Controllers
                 lastName = user.LastName,
                 profilePictureUrl = user.ProfilePictureUrl
             });
-
         }
+        
 
 
         //  PUT api/Profile/update-password
