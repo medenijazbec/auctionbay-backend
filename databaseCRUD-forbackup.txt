@@ -1,4 +1,11 @@
 
+
+
+
+
+
+
+
 -- Drop tables if they already exist (order matters due to FK constraints)
 DROP TABLE IF EXISTS `Bids`;
 DROP TABLE IF EXISTS `AuctionProperties`;
@@ -89,8 +96,8 @@ CREATE TABLE `AspNetUserClaims` (
 
 -- 5. User Logins table (for external providers)
 CREATE TABLE `AspNetUserLogins` (
-    `LoginProvider` VARCHAR(250) NOT NULL,
-    `ProviderKey` VARCHAR(250) NOT NULL,
+    `LoginProvider` VARCHAR(280) NOT NULL,
+    `ProviderKey` VARCHAR(280) NOT NULL,
     `ProviderDisplayName` VARCHAR(100) NULL,
     `UserId` VARCHAR(300) NOT NULL,
     PRIMARY KEY (`LoginProvider`, `ProviderKey`),
@@ -100,9 +107,9 @@ CREATE TABLE `AspNetUserLogins` (
 
 -- 6. User Tokens table
 CREATE TABLE `AspNetUserTokens` (
-    `UserId` VARCHAR(250) NOT NULL,
-    `LoginProvider` VARCHAR(250) NOT NULL,
-    `Name` VARCHAR(250) NOT NULL,
+    `UserId` VARCHAR(256) NOT NULL,
+    `LoginProvider` VARCHAR(256) NOT NULL,
+    `Name` VARCHAR(256) NOT NULL,
     `Value` TEXT NULL,
     PRIMARY KEY (`UserId`, `LoginProvider`, `Name`),
     CONSTRAINT `FK_AspNetUserTokens_Users` FOREIGN KEY (`UserId`) 
@@ -146,18 +153,17 @@ CREATE TABLE `Auctions` (
     `StartingPrice` DECIMAL(10,2) NOT NULL,
     `StartDateTime` DATETIME NOT NULL,
     `EndDateTime` DATETIME NOT NULL,
-    -- This field can store statuses like 'Active', 'Closed', 'Cancelled'
     `AuctionState` VARCHAR(50) NOT NULL,
-    -- The user (creator) who listed the auction (references AspNetUsers.Id)
     `CreatedBy` VARCHAR(300) NOT NULL,
     `CreatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `UpdatedAt` DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-    -- Main image URL for the auction (used in the Auction Card design)
     `MainImageUrl` VARCHAR(300) NULL,
+    `MainImageData` LONGBLOB NULL,
     PRIMARY KEY (`AuctionId`),
     CONSTRAINT `FK_Auctions_Users` FOREIGN KEY (`CreatedBy`) 
          REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- 9. AuctionImages table
 --    Allows multiple images per auction (e.g., for detailed views)
@@ -196,6 +202,23 @@ CREATE TABLE `Bids` (
     CONSTRAINT `FK_Bids_Users` FOREIGN KEY (`UserId`) 
          REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+SELECT 
+    a.AuctionId, 
+    a.Title, 
+    a.Description,
+    a.StartingPrice,
+    a.StartDateTime,
+    a.EndDateTime,
+    a.AuctionState,
+    a.CreatedAt,
+    u.Id AS UserId,
+    u.FirstName,
+    u.LastName,
+    u.Email,
+    a.MainImageUrl
+FROM Auctions a
+INNER JOIN AspNetUsers u ON a.CreatedBy = u.Id;
 
 
 
