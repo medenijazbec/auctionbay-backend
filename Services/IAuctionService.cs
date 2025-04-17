@@ -14,5 +14,7 @@ namespace auctionbay_backend.Services
         Task<IEnumerable<AuctionResponseDto>> GetActiveAuctionsAsync(int page, int pageSize);
 
         Task<IEnumerable<AuctionResponseDto>> GetAuctionsByUserAsync(string userId);
+        Task<AuctionResponseDto?> GetAuctionAsync(int auctionId);
+
     }
 }

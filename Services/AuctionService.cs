@@ -6,6 +6,8 @@ using auctionbay_backend.Data;
 using auctionbay_backend.DTOs;
 using auctionbay_backend.Models;
 using Microsoft.EntityFrameworkCore;
+using auctionbay_backend.Controllers;
+
 
 namespace auctionbay_backend.Services
 {
@@ -136,5 +138,15 @@ namespace auctionbay_backend.Services
                 Bids = auction.Bids.Select(b => new BidDto { Amount = b.Amount }).ToList()
             };
         }
+        //Services/AuctionService.cs   (add GetAuctionAsync)
+        public async Task<AuctionResponseDto?> GetAuctionAsync(int auctionId)
+        {
+            var a = await _dbContext.Auctions
+                                    .Include(x => x.Bids)
+                                    .FirstOrDefaultAsync(x => x.AuctionId == auctionId);
+            return a is null ? null : MapAuctionToResponseDto(a);
+        }
+
+
     }
 }
