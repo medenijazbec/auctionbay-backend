@@ -8,8 +8,8 @@ using auctionbay_backend.Models;
 using auctionbay_backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace auctionbay_backend.Controllers
 {
@@ -31,16 +31,17 @@ namespace auctionbay_backend.Controllers
             _env = env;
         }
 
-        /*HELPERS*/
+        /* ───────── helpers ───────── */
         private Task<ApplicationUser?> CurrentUserAsync()
         {
             var id = User.FindFirstValue("id") ??
                      User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return id is null ? Task.FromResult<ApplicationUser?>(null)
-                              : _um.FindByIdAsync(id);
+            return id is null
+                ? Task.FromResult<ApplicationUser?>(null)
+                : _um.FindByIdAsync(id);
         }
 
-        /*CREATE AUCTION*/
+        /* ───────── CREATE AUCTION ───────── */
         [HttpPost]
         [Authorize]
         [Consumes("multipart/form-data")]
@@ -75,18 +76,13 @@ namespace auctionbay_backend.Controllers
 
             var created = await _svc.CreateAuctionAsync(user.Id, dto);
 
-            return CreatedAtAction(nameof(GetById), new { id = created.AuctionId }, created);
+            // point Location header to the *detail* endpoint
+            return CreatedAtAction(nameof(GetDetail),
+                                   new { id = created.AuctionId },
+                                   created);
         }
 
-        /*GET ONE (for CreatedAt)*/
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var a = await _svc.GetAuctionAsync(id);
-            return a is null ? NotFound() : Ok(a);
-        }
-
-        /*PLACE BID (unchanged)*/
+        /* ───────── PLACE BID ───────── */
         [HttpPost("{id:int}/bid")]
         [Authorize]
         public async Task<IActionResult> Bid(int id, [FromBody] BidDto dto)
@@ -98,10 +94,25 @@ namespace auctionbay_backend.Controllers
             return Ok(res);
         }
 
-        /*LIST ACTIVE */
+        /* ──────────────────────────────────────────────────────
+         *  A) LIST — lightweight “card” DTOs for the main page
+         *     GET /api/Auctions?page=&pageSize=
+         *──────────────────────────────────────────────────────*/
         [HttpGet]
         public async Task<IActionResult> Active([FromQuery] int page = 1,
                                                 [FromQuery] int pageSize = 9)
             => Ok(await _svc.GetActiveAuctionsAsync(page, pageSize));
+
+
+        /* ──────────────────────────────────────────────────────
+         *  B) DETAIL — full DTO incl. bidder names & PFPs
+         *     GET /api/Auctions/{id}
+         *──────────────────────────────────────────────────────*/
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetDetail(int id)
+        {
+            var dto = await _svc.GetAuctionDetailAsync(id);
+            return dto is null ? NotFound() : Ok(dto);
+        }
     }
 }

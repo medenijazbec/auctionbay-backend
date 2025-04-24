@@ -138,6 +138,51 @@ namespace auctionbay_backend.Services
                 Bids = auction.Bids.Select(b => new BidDto { Amount = b.Amount }).ToList()
             };
         }
+
+        //detail mapper that user info:
+        private AuctionResponseDto MapAuctionToDetailDto(Auction auction)
+        {
+            return new AuctionResponseDto
+            {
+                AuctionId = auction.AuctionId,
+                Title = auction.Title,
+                Description = auction.Description,
+                StartingPrice = auction.StartingPrice,
+                StartDateTime = auction.StartDateTime,
+                EndDateTime = auction.EndDateTime,
+                AuctionState = auction.AuctionState,
+                CreatedBy = auction.CreatedBy,
+                CreatedAt = auction.CreatedAt,
+                MainImageUrl = auction.MainImageUrl,
+                CurrentHighestBid = auction.Bids.Any() ? auction.Bids.Max(b => b.Amount) : auction.StartingPrice,
+                TimeLeft = auction.EndDateTime > DateTime.UtcNow
+                                          ? auction.EndDateTime - DateTime.UtcNow
+                                          : TimeSpan.Zero,
+
+                //full bid info
+                Bids = auction.Bids
+                                          .OrderByDescending(b => b.CreatedDateTime)
+                                          .Select(b => new BidDto
+                                          {
+                                              Amount = b.Amount,
+                                              CreatedDateTime = b.CreatedDateTime,
+                                              UserName = b.User.FirstName + " " + b.User.LastName,
+                                              ProfilePictureUrl = b.User.ProfilePictureUrl
+                                          })
+                                          .ToList()
+            };
+        }
+        public async Task<AuctionResponseDto?> GetAuctionDetailAsync(int auctionId)
+        {
+            var a = await _dbContext.Auctions
+                                    .Include(x => x.Bids)
+                                    .ThenInclude(b => b.User)
+                                    .FirstOrDefaultAsync(x => x.AuctionId == auctionId);
+            if (a == null) return null;
+            return MapAuctionToDetailDto(a);
+        }
+
+
         //Services/AuctionService.cs   (add GetAuctionAsync)
         public async Task<AuctionResponseDto?> GetAuctionAsync(int auctionId)
         {

@@ -15,6 +15,6 @@ namespace auctionbay_backend.Services
 
         Task<IEnumerable<AuctionResponseDto>> GetAuctionsByUserAsync(string userId);
         Task<AuctionResponseDto?> GetAuctionAsync(int auctionId);
-
+        Task<AuctionResponseDto?> GetAuctionDetailAsync(int auctionId);
     }
 }
