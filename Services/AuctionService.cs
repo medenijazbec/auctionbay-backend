@@ -262,21 +262,32 @@ namespace auctionbay_backend.Services
         }
 
         public async Task<IEnumerable<AuctionResponseDto>>
-       GetActiveAuctionsAsync(int page, int pageSize, string? userId = null)
+          GetActiveAuctionsAsync(int page, int pageSize, string? userId = null)
         {
+            // 24 hours ago cutoff for “done” cards
+            var cutoff = DateTime.UtcNow.AddHours(-24);
+
             var list = await _dbContext.Auctions
-                                .Include(a => a.Bids)
-                                .Where(a => a.AuctionState == "Active" &&
-                                            a.EndDateTime > DateTime.UtcNow)
-                                .OrderBy(a => a.EndDateTime)
-                                .Skip((page - 1) * pageSize)
-                                .Take(pageSize)
-                                .ToListAsync();
+                .Include(a => a.Bids)
+                .Where(a =>
+                    // still open:
+                    (a.AuctionState == "Active" && a.EndDateTime > DateTime.UtcNow)
+                    ||
+                    // OR closed within last 24 h AND user has a bid on it
+                    (userId != null
+                     && a.EndDateTime <= DateTime.UtcNow
+                     && a.EndDateTime > cutoff
+                     && a.Bids.Any(b => b.UserId == userId)))
+                .OrderBy(a => a.EndDateTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
             return list.Select(a => ToDto(a, userId));
         }
 
-        
+
+
 
     }
 }
