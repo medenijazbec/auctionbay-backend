@@ -130,8 +130,8 @@
               "Title": "AuctionService.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\AuctionService.cs",
               "RelativeDocumentMoniker": "Services\\AuctionService.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\AuctionService.cs*",
-              "RelativeToolTip": "Services\\AuctionService.cs*",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\AuctionService.cs",
+              "RelativeToolTip": "Services\\AuctionService.cs",
               "ViewState": "AgIAAOoAAAAAAAAAAAAiwB8BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-11T22:15:31.896Z",
@@ -147,8 +147,7 @@
               "RelativeToolTip": "Services\\IAuctionService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:15:21.218Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:15:21.218Z"
             },
             {
               "$type": "Document",
