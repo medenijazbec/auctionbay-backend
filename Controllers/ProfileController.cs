@@ -6,6 +6,8 @@ using auctionbay_backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace auctionbay_backend.Controllers
 {
@@ -16,12 +18,13 @@ namespace auctionbay_backend.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuctionService _auctionService;
-
+        private readonly IWebHostEnvironment _env;
         public ProfileController(UserManager<ApplicationUser> userManager,
-                                 IAuctionService auctionService)
+                                 IAuctionService auctionService, IWebHostEnvironment env)
         {
             _userManager = userManager;
             _auctionService = auctionService;
+            _env = env;
         }
 
         /* ─────────────────── helpers ─────────────────── */
@@ -32,6 +35,69 @@ namespace auctionbay_backend.Controllers
             return id is null ? Task.FromResult<ApplicationUser?>(null)
                               : _userManager.FindByIdAsync(id);
         }
+
+        #region ─────── DELETE MY AUCTION ───────
+        [HttpDelete("auction/{id:int}")]
+        public async Task<IActionResult> DeleteAuction(int id)
+        {
+            var user = await CurrentUserAsync();
+            if (user is null) return Unauthorized();
+
+            try
+            {
+                await _auctionService.DeleteAuctionAsync(user.Id, id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+        #endregion
+
+
+        #region ─────── UPDATE (multipart) ──────
+        // DTO lives just below ↓
+        [HttpPut("auction/{id:int}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateAuctionMultipart(
+            int id, [FromForm] AuctionUpdateFormDto form)
+        {
+            var user = await CurrentUserAsync();
+            if (user is null) return Unauthorized();
+
+            /* 1.  optional new image */
+            var imgUrl = string.Empty;
+            if (form.Image is { Length: > 0 })
+            {
+                var folder = Path.Combine(_env.WebRootPath, "images");
+                Directory.CreateDirectory(folder);
+                var name = $"{Guid.NewGuid():N}{Path.GetExtension(form.Image.FileName)}";
+                await using var fs = System.IO.File.Create(
+                                        Path.Combine(folder, name));
+                await form.Image.CopyToAsync(fs);
+                imgUrl = $"/images/{name}";
+            }
+
+            /* 2.  forward */
+            var dto = new AuctionUpdateDto
+            {
+                Title = form.Title,
+                Description = form.Description,
+                StartingPrice = form.StartingPrice,
+                StartDateTime = form.StartDateTime,
+                EndDateTime = form.EndDateTime,
+                MainImageUrl = string.IsNullOrEmpty(imgUrl)
+                                  ? form.ExistingImageUrl   // keep old
+                                  : imgUrl
+            };
+
+            var updated = await _auctionService.UpdateAuctionAsync(user.Id, id, dto);
+            return Ok(updated);
+        }
+        #endregion
+
+
 
         //  GET api/Profile/me
         [HttpGet("me")]

@@ -286,6 +286,18 @@ namespace auctionbay_backend.Services
             return list.Select(a => ToDto(a, userId));
         }
 
+        public async Task DeleteAuctionAsync(string userId, int auctionId)
+        {
+            var auction = await _dbContext.Auctions
+                                          .FirstOrDefaultAsync(a => a.AuctionId == auctionId);
+            if (auction is null)
+                throw new Exception("Auction not found.");
+            if (auction.CreatedBy != userId)
+                throw new Exception("You are not authorised to delete this auction.");
+
+            _dbContext.Auctions.Remove(auction);
+            await _dbContext.SaveChangesAsync();
+        }
 
 
 

@@ -22,6 +22,7 @@ namespace auctionbay_backend.Services
 
         Task<AuctionResponseDto?> GetAuctionDetailAsync(int auctionId, string? userId = null);
 
+        Task DeleteAuctionAsync(string userId, int auctionId);
 
 
     }
