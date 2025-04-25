@@ -41,6 +41,34 @@ namespace auctionbay_backend.Controllers
                 : _um.FindByIdAsync(id);
         }
 
+
+        /* ───────────────────────────────────────────────── */
+        /*  LIST ( card DTOs )                              */
+        /*  GET /api/Auctions?page=&pageSize=               */
+        /* ───────────────────────────────────────────────── */
+        [HttpGet]
+        public async Task<IActionResult> Active(
+            [FromQuery] int page = 1, [FromQuery] int pageSize = 9)
+        {
+            var user = await CurrentUserAsync();
+            var rows = await _svc.GetActiveAuctionsAsync(
+                           page, pageSize, user?.Id);
+            return Ok(rows);
+        }
+
+        /* ───────────────────────────────────────────────── */
+        /*  DETAIL ( full DTO )                             */
+        /* ───────────────────────────────────────────────── */
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetDetail(int id)
+        {
+            var user = await CurrentUserAsync();
+            var dto = await _svc.GetAuctionDetailAsync(id, user?.Id);
+            return dto is null ? NotFound() : Ok(dto);
+        }
+
+
+
         /* ───────── CREATE AUCTION ───────── */
         [HttpPost]
         [Authorize]
@@ -94,25 +122,6 @@ namespace auctionbay_backend.Controllers
             return Ok(res);
         }
 
-        /* ──────────────────────────────────────────────────────
-         *  A) LIST — lightweight “card” DTOs for the main page
-         *     GET /api/Auctions?page=&pageSize=
-         *──────────────────────────────────────────────────────*/
-        [HttpGet]
-        public async Task<IActionResult> Active([FromQuery] int page = 1,
-                                                [FromQuery] int pageSize = 9)
-            => Ok(await _svc.GetActiveAuctionsAsync(page, pageSize));
 
-
-        /* ──────────────────────────────────────────────────────
-         *  B) DETAIL — full DTO incl. bidder names & PFPs
-         *     GET /api/Auctions/{id}
-         *──────────────────────────────────────────────────────*/
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetDetail(int id)
-        {
-            var dto = await _svc.GetAuctionDetailAsync(id);
-            return dto is null ? NotFound() : Ok(dto);
-        }
     }
 }

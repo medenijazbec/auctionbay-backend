@@ -14,10 +14,56 @@ namespace auctionbay_backend.Services
     public class AuctionService : IAuctionService
     {
         private readonly ApplicationDbContext _dbContext;
+
         public AuctionService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
+        private static string CalculateState(
+            Auction a, string? userId)
+        {
+            if (a.EndDateTime <= DateTime.UtcNow)
+                return "done";
+
+            if (string.IsNullOrEmpty(userId))
+                return "inProgress";
+
+            var bidsByUser = a.Bids.Where(b => b.UserId == userId);
+            if (!bidsByUser.Any()) return "inProgress";
+
+            var highest = a.Bids.OrderByDescending(b => b.Amount)
+                                .FirstOrDefault();
+            return highest?.UserId == userId ? "winning" : "outbid";
+        }
+
+        private static AuctionResponseDto ToDto(
+            Auction a, string? userId)
+        {
+            var state = CalculateState(a, userId);
+            return new AuctionResponseDto
+            {
+                AuctionId = a.AuctionId,
+                Title = a.Title,
+                Description = a.Description,
+                StartingPrice = a.StartingPrice,
+                StartDateTime = a.StartDateTime,
+                EndDateTime = a.EndDateTime,
+                AuctionState = state,
+                CreatedBy = a.CreatedBy,
+                CreatedAt = a.CreatedAt,
+                MainImageUrl = a.MainImageUrl,
+                CurrentHighestBid = a.Bids.Any()
+                                    ? a.Bids.Max(b => b.Amount)
+                                    : a.StartingPrice,
+                TimeLeft = a.EndDateTime > DateTime.UtcNow
+                                    ? a.EndDateTime - DateTime.UtcNow
+                                    : TimeSpan.Zero,
+                /* light list keeps bids only for owner cards */
+                Bids = a.Bids.Select(b => new BidDto
+                { Amount = b.Amount }).ToList()
+            };
+        }
+
 
         public async Task<AuctionResponseDto> CreateAuctionAsync(string userId, AuctionCreateDto dto)
         {
@@ -192,6 +238,45 @@ namespace auctionbay_backend.Services
             return a is null ? null : MapAuctionToResponseDto(a);
         }
 
+        public async Task<AuctionResponseDto?>GetAuctionDetailAsync(int id, string? userId = null)
+        {
+            var a = await _dbContext.Auctions
+                             .Include(x => x.Bids)
+                             .ThenInclude(b => b.User)
+                             .FirstOrDefaultAsync(x => x.AuctionId == id);
+
+            if (a is null) return null;
+
+            /* richer DTO with bidder names + pics */
+            var dto = ToDto(a, userId);
+            dto.Bids = a.Bids.OrderByDescending(b => b.CreatedDateTime)
+                             .Select(b => new BidDto
+                             {
+                                 Amount = b.Amount,
+                                 CreatedDateTime = b.CreatedDateTime,
+                                 UserName = b.User.FirstName + " " +
+                                                     b.User.LastName,
+                                 ProfilePictureUrl = b.User.ProfilePictureUrl
+                             }).ToList();
+            return dto;
+        }
+
+        public async Task<IEnumerable<AuctionResponseDto>>
+       GetActiveAuctionsAsync(int page, int pageSize, string? userId = null)
+        {
+            var list = await _dbContext.Auctions
+                                .Include(a => a.Bids)
+                                .Where(a => a.AuctionState == "Active" &&
+                                            a.EndDateTime > DateTime.UtcNow)
+                                .OrderBy(a => a.EndDateTime)
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize)
+                                .ToListAsync();
+
+            return list.Select(a => ToDto(a, userId));
+        }
+
+        
 
     }
 }

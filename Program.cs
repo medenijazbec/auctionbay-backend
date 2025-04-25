@@ -245,7 +245,7 @@ static async Task SeedDatabaseAsync(WebApplication app)
     var rand = new Random();
 
     //Create 10 users and for each create 3 auctions.
-    for (int i = 1; i <= 10; i++)
+    for (int i = 1; i <= 50; i++)
     {
         var fname = firstNames[rand.Next(firstNames.Length)];
         var lname = lastNames[rand.Next(lastNames.Length)];
@@ -270,7 +270,7 @@ static async Task SeedDatabaseAsync(WebApplication app)
         }
 
         //For each user, create 3 auctions.
-        for (int j = 1; j <= 3; j++)
+        for (int j = 1; j <= 10; j++)
         {
             var randomTitle = randomTitles[rand.Next(randomTitles.Length)] + $" #{j}";
             var randomImage = imageFiles[rand.Next(imageFiles.Length)];
