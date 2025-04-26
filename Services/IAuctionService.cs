@@ -25,5 +25,10 @@ namespace auctionbay_backend.Services
         Task DeleteAuctionAsync(string userId, int auctionId);
 
 
+        /*profile-bidding / won ★ */
+        Task<IEnumerable<AuctionResponseDto>> GetAuctionsBiddingAsync(string userId);
+        Task<IEnumerable<AuctionResponseDto>> GetAuctionsWonAsync(string userId);
+
+
     }
 }

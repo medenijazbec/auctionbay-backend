@@ -298,7 +298,33 @@ namespace auctionbay_backend.Services
             _dbContext.Auctions.Remove(auction);
             await _dbContext.SaveChangesAsync();
         }
+        public async Task<IEnumerable<AuctionResponseDto>> GetAuctionsBiddingAsync(string userId)
+        {
+            var list = await _dbContext.Auctions
+                .Include(a => a.Bids)
+                .Where(a =>
+                       a.CreatedBy != userId &&                    // not my own auction
+                       a.Bids.Any(b => b.UserId == userId))        // I have at least one bid
+                .OrderBy(a => a.EndDateTime)
+                .ToListAsync();
 
+            return list.Select(a => ToDto(a, userId));
+        }
+
+        public async Task<IEnumerable<AuctionResponseDto>> GetAuctionsWonAsync(string userId)
+        {
+            var list = await _dbContext.Auctions
+                .Include(a => a.Bids)
+                .Where(a =>
+                       a.EndDateTime <= DateTime.UtcNow &&         // finished
+                       a.Bids.Any() &&                             // there was at least one bid
+                       a.Bids.OrderByDescending(b => b.Amount)
+                             .First().UserId == userId)            // my bid is the highest
+                .OrderByDescending(a => a.EndDateTime)
+                .ToListAsync();
+
+            return list.Select(a => ToDto(a, userId));
+        }
 
 
     }

@@ -195,9 +195,31 @@ namespace auctionbay_backend.Controllers
             return Ok(auction);
         }
 
+        /* GET  api/Profile/bidding  – auctions im currently bidding on */
+        [HttpGet("bidding")]
+        public async Task<IActionResult> GetBiddingAuctions()
+        {
+            var user = await CurrentUserAsync();
+            if (user is null) return Unauthorized();
+
+            var auctions = await _auctionService.GetAuctionsBiddingAsync(user.Id);
+            return Ok(auctions);
+        }
+
+        /* GET  api/Profile/won  – auctions I have won */
+        [HttpGet("won")]
+        public async Task<IActionResult> GetWonAuctions()
+        {
+            var user = await CurrentUserAsync();
+            if (user is null) return Unauthorized();
+
+            var auctions = await _auctionService.GetAuctionsWonAsync(user.Id);
+            return Ok(auctions);
+        }
 
 
-        //  PUT api/Profile/auction/{id}
+        //old update of auction using json
+        /*//  PUT api/Profile/auction/{id}
         [HttpPut("auction/{id}")]
         public async Task<IActionResult> UpdateAuction(int id, [FromBody] AuctionUpdateDto dto)
         {
@@ -213,6 +235,6 @@ namespace auctionbay_backend.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
-        }
+        }*/
     }
 }
