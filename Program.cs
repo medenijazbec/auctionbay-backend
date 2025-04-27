@@ -288,9 +288,7 @@ static async Task SeedDatabaseAsync(WebApplication app)
                 AuctionState = "Active",
                 CreatedBy = user.Id,
                 CreatedAt = DateTime.UtcNow,
-                //Save the file path as well if needed.
                 MainImageUrl = $"/imagesfordb/{randomImage}",
-                //Save binary image data.
                 MainImageData = imageData
             };
 
