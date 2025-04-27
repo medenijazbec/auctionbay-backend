@@ -11,5 +11,7 @@ namespace auctionbay_backend.DTOs
         public decimal StartingPrice { get; set; }
         public DateTime EndDateTime { get; set; }
         public IFormFile? Image { get; set; }
+        //also a Thumbnail field
+        public IFormFile? Thumbnail { get; set; }
     }
 }

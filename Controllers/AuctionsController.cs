@@ -78,8 +78,12 @@ namespace auctionbay_backend.Controllers
             var user = await CurrentUserAsync();
             if (user is null) return Unauthorized();
 
+            var imagesFolder = Path.Combine(_env.WebRootPath, "images");
+            Directory.CreateDirectory(imagesFolder);
+
             /* 1. store image (optional) */
             var imgUrl = string.Empty;
+            string thumbnailUrl = "";
             if (form.Image is { Length: > 0 })
             {
                 var folder = Path.Combine(_env.WebRootPath, "images");
@@ -91,6 +95,15 @@ namespace auctionbay_backend.Controllers
                 imgUrl = $"/images/{name}";
             }
 
+            // handle the thumbnail upload the same way
+                if (form.Thumbnail is { Length: > 0 })
+                {
+                var thumbName = $"{Guid.NewGuid():N}{Path.GetExtension(form.Thumbnail.FileName)}";
+                await using var ts = System.IO.File.Create(Path.Combine(imagesFolder, thumbName));
+                await form.Thumbnail.CopyToAsync(ts);
+                thumbnailUrl = $"/images/{thumbName}";
+                }
+
             /* 2. forward to service */
             var dto = new AuctionCreateDto
             {
@@ -99,7 +112,8 @@ namespace auctionbay_backend.Controllers
                 StartingPrice = form.StartingPrice,
                 StartDateTime = DateTime.UtcNow,
                 EndDateTime = form.EndDateTime,
-                MainImageUrl = imgUrl
+                MainImageUrl = imgUrl,
+                ThumbnailUrl = thumbnailUrl
             };
 
             var created = await _svc.CreateAuctionAsync(user.Id, dto);

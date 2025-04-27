@@ -16,6 +16,8 @@ namespace auctionbay_backend.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public string MainImageUrl { get; set; } = string.Empty;
+        //store the cropped thumbnail URL
+        public string ThumbnailUrl { get; set; } = string.Empty;
 
         //property to store image binary data in the database.
         public byte[]? MainImageData { get; set; }

@@ -17,6 +17,8 @@ namespace auctionbay_backend.DTOs
         public string MainImageUrl { get; set; } = string.Empty;
         //returns the image binary data (if available) directly from the database.
         public byte[]? MainImageData { get; set; }
+        //add th7umbnail imgs
+        public string ThumbnailUrl { get; set; } = string.Empty;
         public decimal CurrentHighestBid { get; set; }
         public TimeSpan TimeLeft { get; set; }
         public List<BidDto> Bids { get; set; } = new List<BidDto>();

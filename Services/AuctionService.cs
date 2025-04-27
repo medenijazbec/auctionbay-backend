@@ -52,6 +52,7 @@ namespace auctionbay_backend.Services
                 CreatedBy = a.CreatedBy,
                 CreatedAt = a.CreatedAt,
                 MainImageUrl = a.MainImageUrl,
+                ThumbnailUrl = a.ThumbnailUrl,
                 CurrentHighestBid = a.Bids.Any()
                                     ? a.Bids.Max(b => b.Amount)
                                     : a.StartingPrice,
@@ -75,6 +76,7 @@ namespace auctionbay_backend.Services
                 StartDateTime = dto.StartDateTime,
                 EndDateTime = dto.EndDateTime,
                 MainImageUrl = dto.MainImageUrl,
+                ThumbnailUrl = dto.ThumbnailUrl,
                 CreatedBy = userId,
                 CreatedAt = DateTime.UtcNow,
                 AuctionState = "Active"
@@ -179,6 +181,7 @@ namespace auctionbay_backend.Services
                 CreatedBy = auction.CreatedBy,
                 CreatedAt = auction.CreatedAt,
                 MainImageUrl = auction.MainImageUrl,
+                ThumbnailUrl = auction.ThumbnailUrl,
                 CurrentHighestBid = auction.Bids.Any() ? auction.Bids.Max(b => b.Amount) : auction.StartingPrice,
                 TimeLeft = auction.EndDateTime > DateTime.UtcNow ? auction.EndDateTime - DateTime.UtcNow : TimeSpan.Zero,
                 Bids = auction.Bids.Select(b => new BidDto { Amount = b.Amount }).ToList()
