@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
 
 
 namespace auctionbay_backend.Controllers
@@ -19,12 +20,17 @@ namespace auctionbay_backend.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuctionService _auctionService;
         private readonly IWebHostEnvironment _env;
+        private readonly INotificationService _notificationService;
+
+
         public ProfileController(UserManager<ApplicationUser> userManager,
-                                 IAuctionService auctionService, IWebHostEnvironment env)
+                                 IAuctionService auctionService, INotificationService notificationService, IWebHostEnvironment env)
         {
             _userManager = userManager;
             _auctionService = auctionService;
+            _notificationService = notificationService;
             _env = env;
+
         }
 
         /* ─────────────────── helpers ─────────────────── */
@@ -35,6 +41,37 @@ namespace auctionbay_backend.Controllers
             return id is null ? Task.FromResult<ApplicationUser?>(null)
                               : _userManager.FindByIdAsync(id);
         }
+
+        [HttpGet("notifications")]
+        public async Task<IActionResult> GetNotifications()
+        {
+            var user = await CurrentUserAsync();
+            if (user == null) return Unauthorized();
+            var list = await _notificationService.GetForUserAsync(user.Id);
+            return Ok(list);
+        }
+
+        [HttpPut("notifications/{id}/read")]
+        public async Task<IActionResult> MarkNotificationRead(int id)
+        {
+          var user = await CurrentUserAsync();
+          if (user == null) return Unauthorized();
+          await _notificationService.MarkAsReadAsync(user.Id, id);
+          return NoContent();
+        }
+
+        /*mark all as read*/
+        [HttpPut("notifications/markAllRead")]
+        public async Task<IActionResult> MarkAllRead()
+        {
+            var user = await CurrentUserAsync();
+            if (user == null) return Unauthorized();
+
+            await _notificationService.MarkAllAsReadAsync(user.Id);
+            return NoContent();
+        }
+
+
 
         #region ─────── DELETE MY AUCTION ───────
         [HttpDelete("auction/{id:int}")]

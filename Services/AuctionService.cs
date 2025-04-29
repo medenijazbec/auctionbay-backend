@@ -7,17 +7,20 @@ using auctionbay_backend.DTOs;
 using auctionbay_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using auctionbay_backend.Controllers;
-
+using auctionbay_backend.Services;
+using Google.Protobuf.WellKnownTypes;
+using static Google.Protobuf.WellKnownTypes.Field.Types;
 
 namespace auctionbay_backend.Services
 {
     public class AuctionService : IAuctionService
     {
         private readonly ApplicationDbContext _dbContext;
-
-        public AuctionService(ApplicationDbContext dbContext)
+        private readonly INotificationService _notif;
+        public AuctionService(ApplicationDbContext dbContext, INotificationService notificationService)
         {
             _dbContext = dbContext;
+            _notif = notificationService;
         }
         private static string CalculateState(
             Auction a, string? userId)
@@ -141,8 +144,32 @@ namespace auctionbay_backend.Services
 
             _dbContext.Bids.Add(bid);
             await _dbContext.SaveChangesAsync();
+
+
+            //  — notify the previous top bidder that they've been outbid
+            if (highestBid != null && highestBid.UserId != userId)
+            {
+            await _notif.CreateAsync(new Notification
+            {
+                UserId = highestBid.UserId,
+                AuctionId = auctionId,
+                Kind = "outbid",
+                Title = auction.Title,
+                Timestamp = DateTime.UtcNow
+                });
+            }
+
+
+
             return new BidDto { Amount = bid.Amount };
         }
+        //could also hook here into auction-completion logic and call _notif.CreateAsync
+        //willdo if first impl doesnt wrk
+
+
+
+
+
 
         //Updated GetActiveAuctionsAsync method with pagination
         public async Task<IEnumerable<AuctionResponseDto>> GetActiveAuctionsAsync(int page, int pageSize)

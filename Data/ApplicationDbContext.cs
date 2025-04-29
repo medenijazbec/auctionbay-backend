@@ -17,6 +17,7 @@ namespace auctionbay_backend.Data
 
         public DbSet<Auction> Auctions { get; set; }
         public DbSet<Bid> Bids { get; set; }
+        public DbSet<Notification> Notifications { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

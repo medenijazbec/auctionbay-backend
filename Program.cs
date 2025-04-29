@@ -81,7 +81,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IAuctionService, AuctionService>();//forgot to add
-
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 //add controllers and endpoints explorer
 builder.Services.AddControllers()
