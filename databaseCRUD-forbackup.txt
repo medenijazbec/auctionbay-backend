@@ -1,23 +1,16 @@
 
-
-
-
-
-
-
-
 -- Drop tables if they already exist (order matters due to FK constraints)
-DROP TABLE IF EXISTS `Bids`;
-DROP TABLE IF EXISTS `AuctionProperties`;
-DROP TABLE IF EXISTS `AuctionImages`;
-DROP TABLE IF EXISTS `Auctions`;
-DROP TABLE IF EXISTS `AspNetUserRoles`;
-DROP TABLE IF EXISTS `AspNetUserTokens`;
-DROP TABLE IF EXISTS `AspNetUserLogins`;
-DROP TABLE IF EXISTS `AspNetUserClaims`;
-DROP TABLE IF EXISTS `AspNetRoleClaims`;
-DROP TABLE IF EXISTS `AspNetUsers`;
-DROP TABLE IF EXISTS `AspNetRoles`;
+DROP TABLE IF EXISTS Bids;
+DROP TABLE IF EXISTS AuctionProperties;
+DROP TABLE IF EXISTS AuctionImages;
+DROP TABLE IF EXISTS Auctions;
+DROP TABLE IF EXISTS AspNetUserRoles;
+DROP TABLE IF EXISTS AspNetUserTokens;
+DROP TABLE IF EXISTS AspNetUserLogins;
+DROP TABLE IF EXISTS AspNetUserClaims;
+DROP TABLE IF EXISTS AspNetRoleClaims;
+DROP TABLE IF EXISTS AspNetUsers;
+DROP TABLE IF EXISTS AspNetRoles;
 
 
 
@@ -30,101 +23,101 @@ DROP TABLE IF EXISTS `AspNetRoles`;
 -- ===============================================
 
 -- 1. Roles table
-CREATE TABLE `AspNetRoles` (
-    `Id` VARCHAR(300) NOT NULL,
-    `Name` VARCHAR(256) NULL,
-    `NormalizedName` VARCHAR(256) NULL,
-    `ConcurrencyStamp` VARCHAR(256) NULL,
-    PRIMARY KEY (`Id`)
+CREATE TABLE AspNetRoles (
+    Id VARCHAR(300) NOT NULL,
+    Name VARCHAR(256) NULL,
+    NormalizedName VARCHAR(256) NULL,
+    ConcurrencyStamp VARCHAR(256) NULL,
+    PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Optional unique index on NormalizedName (if non-null values)
-CREATE UNIQUE INDEX `IX_AspNetRoles_NormalizedName` 
-    ON `AspNetRoles`(`NormalizedName`);
+CREATE UNIQUE INDEX IX_AspNetRoles_NormalizedName 
+    ON AspNetRoles(NormalizedName);
 
 -- 2. Users table (with custom profile fields)
-CREATE TABLE `AspNetUsers` (
-    `Id` VARCHAR(450) NOT NULL,
-    `UserName` VARCHAR(256) NULL,
-    `NormalizedUserName` VARCHAR(256) NULL,
-    `Email` VARCHAR(256) NULL,
-    `NormalizedEmail` VARCHAR(256) NULL,
-    `EmailConfirmed` BIT NOT NULL DEFAULT 0,
-    `PasswordHash` TEXT NULL,
-    `SecurityStamp` TEXT NULL,
-    `ConcurrencyStamp` TEXT NULL,
-    `PhoneNumber` VARCHAR(50) NULL,
-    `PhoneNumberConfirmed` BIT NOT NULL DEFAULT 0,
-    `TwoFactorEnabled` BIT NOT NULL DEFAULT 0,
-    `LockoutEnd` DATETIME NULL,
-    `LockoutEnabled` BIT NOT NULL DEFAULT 1,
-    `AccessFailedCount` INT NOT NULL DEFAULT 0,
+CREATE TABLE AspNetUsers (
+    Id VARCHAR(450) NOT NULL,
+    UserName VARCHAR(256) NULL,
+    NormalizedUserName VARCHAR(256) NULL,
+    Email VARCHAR(256) NULL,
+    NormalizedEmail VARCHAR(256) NULL,
+    EmailConfirmed BIT NOT NULL DEFAULT 0,
+    PasswordHash TEXT NULL,
+    SecurityStamp TEXT NULL,
+    ConcurrencyStamp TEXT NULL,
+    PhoneNumber VARCHAR(50) NULL,
+    PhoneNumberConfirmed BIT NOT NULL DEFAULT 0,
+    TwoFactorEnabled BIT NOT NULL DEFAULT 0,
+    LockoutEnd DATETIME NULL,
+    LockoutEnabled BIT NOT NULL DEFAULT 1,
+    AccessFailedCount INT NOT NULL DEFAULT 0,
     -- Custom fields for profile
-    `FirstName` VARCHAR(100) NULL,
-    `LastName` VARCHAR(100) NULL,
-    `ProfilePictureUrl` VARCHAR(300) NULL,
-    PRIMARY KEY (`Id`)
+    FirstName VARCHAR(100) NULL,
+    LastName VARCHAR(100) NULL,
+    ProfilePictureUrl VARCHAR(300) NULL,
+    PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Optional unique indexes on NormalizedUserName and NormalizedEmail
-CREATE UNIQUE INDEX `IX_AspNetUsers_NormalizedUserName` 
-    ON `AspNetUsers`(`NormalizedUserName`);
-CREATE UNIQUE INDEX `IX_AspNetUsers_NormalizedEmail` 
-    ON `AspNetUsers`(`NormalizedEmail`);
+CREATE UNIQUE INDEX IX_AspNetUsers_NormalizedUserName 
+    ON AspNetUsers(NormalizedUserName);
+CREATE UNIQUE INDEX IX_AspNetUsers_NormalizedEmail 
+    ON AspNetUsers(NormalizedEmail);
 
 -- 3. Role Claims table
-CREATE TABLE `AspNetRoleClaims` (
-    `Id` INT NOT NULL AUTO_INCREMENT,
-    `RoleId` VARCHAR(450) NOT NULL,
-    `ClaimType` TEXT NULL,
-    `ClaimValue` TEXT NULL,
-    PRIMARY KEY (`Id`),
-    CONSTRAINT `FK_AspNetRoleClaims_Roles` FOREIGN KEY (`RoleId`) 
-         REFERENCES `AspNetRoles`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE AspNetRoleClaims (
+    Id INT NOT NULL AUTO_INCREMENT,
+    RoleId VARCHAR(450) NOT NULL,
+    ClaimType TEXT NULL,
+    ClaimValue TEXT NULL,
+    PRIMARY KEY (Id),
+    CONSTRAINT FK_AspNetRoleClaims_Roles FOREIGN KEY (RoleId) 
+         REFERENCES AspNetRoles(Id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 4. User Claims table
-CREATE TABLE `AspNetUserClaims` (
-    `Id` INT NOT NULL AUTO_INCREMENT,
-    `UserId` VARCHAR(300) NOT NULL,
-    `ClaimType` TEXT NULL,
-    `ClaimValue` TEXT NULL,
-    PRIMARY KEY (`Id`),
-    CONSTRAINT `FK_AspNetUserClaims_Users` FOREIGN KEY (`UserId`) 
-         REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE AspNetUserClaims (
+    Id INT NOT NULL AUTO_INCREMENT,
+    UserId VARCHAR(300) NOT NULL,
+    ClaimType TEXT NULL,
+    ClaimValue TEXT NULL,
+    PRIMARY KEY (Id),
+    CONSTRAINT FK_AspNetUserClaims_Users FOREIGN KEY (UserId) 
+         REFERENCES AspNetUsers(Id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 5. User Logins table (for external providers)
-CREATE TABLE `AspNetUserLogins` (
-    `LoginProvider` VARCHAR(280) NOT NULL,
-    `ProviderKey` VARCHAR(280) NOT NULL,
-    `ProviderDisplayName` VARCHAR(100) NULL,
-    `UserId` VARCHAR(300) NOT NULL,
-    PRIMARY KEY (`LoginProvider`, `ProviderKey`),
-    CONSTRAINT `FK_AspNetUserLogins_Users` FOREIGN KEY (`UserId`) 
-         REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE AspNetUserLogins (
+    LoginProvider VARCHAR(280) NOT NULL,
+    ProviderKey VARCHAR(280) NOT NULL,
+    ProviderDisplayName VARCHAR(100) NULL,
+    UserId VARCHAR(300) NOT NULL,
+    PRIMARY KEY (LoginProvider, ProviderKey),
+    CONSTRAINT FK_AspNetUserLogins_Users FOREIGN KEY (UserId) 
+         REFERENCES AspNetUsers(Id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 6. User Tokens table
-CREATE TABLE `AspNetUserTokens` (
-    `UserId` VARCHAR(256) NOT NULL,
-    `LoginProvider` VARCHAR(256) NOT NULL,
-    `Name` VARCHAR(256) NOT NULL,
-    `Value` TEXT NULL,
-    PRIMARY KEY (`UserId`, `LoginProvider`, `Name`),
-    CONSTRAINT `FK_AspNetUserTokens_Users` FOREIGN KEY (`UserId`) 
-         REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE AspNetUserTokens (
+    UserId VARCHAR(256) NOT NULL,
+    LoginProvider VARCHAR(256) NOT NULL,
+    Name VARCHAR(256) NOT NULL,
+    Value TEXT NULL,
+    PRIMARY KEY (UserId, LoginProvider, Name),
+    CONSTRAINT FK_AspNetUserTokens_Users FOREIGN KEY (UserId) 
+         REFERENCES AspNetUsers(Id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 7. User-Roles mapping table
-CREATE TABLE `AspNetUserRoles` (
-    `UserId` VARCHAR(300) NOT NULL,
-    `RoleId` VARCHAR(300) NOT NULL,
-    PRIMARY KEY (`UserId`, `RoleId`),
-    CONSTRAINT `FK_AspNetUserRoles_Users` FOREIGN KEY (`UserId`) 
-         REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `FK_AspNetUserRoles_Roles` FOREIGN KEY (`RoleId`) 
-         REFERENCES `AspNetRoles`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE AspNetUserRoles (
+    UserId VARCHAR(300) NOT NULL,
+    RoleId VARCHAR(300) NOT NULL,
+    PRIMARY KEY (UserId, RoleId),
+    CONSTRAINT FK_AspNetUserRoles_Users FOREIGN KEY (UserId) 
+         REFERENCES AspNetUsers(Id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_AspNetUserRoles_Roles FOREIGN KEY (RoleId) 
+         REFERENCES AspNetRoles(Id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -146,62 +139,79 @@ CREATE TABLE `AspNetUserRoles` (
 
 -- 8. Auctions table 
 --    This table stores auction listings. 
-CREATE TABLE `Auctions` (
-    `AuctionId` INT NOT NULL AUTO_INCREMENT,
-    `Title` VARCHAR(200) NOT NULL,
-    `Description` TEXT NOT NULL,
-    `StartingPrice` DECIMAL(10,2) NOT NULL,
-    `StartDateTime` DATETIME NOT NULL,
-    `EndDateTime` DATETIME NOT NULL,
-    `AuctionState` VARCHAR(50) NOT NULL,
-    `CreatedBy` VARCHAR(300) NOT NULL,
-    `CreatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `UpdatedAt` DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-    `MainImageUrl` VARCHAR(300) NULL,
-    `MainImageData` LONGBLOB NULL,
-    PRIMARY KEY (`AuctionId`),
-    CONSTRAINT `FK_Auctions_Users` FOREIGN KEY (`CreatedBy`) 
-         REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Auctions (
+    AuctionId INT NOT NULL AUTO_INCREMENT,
+    Title VARCHAR(200) NOT NULL,
+    Description TEXT NOT NULL,
+    StartingPrice DECIMAL(10,2) NOT NULL,
+    StartDateTime DATETIME NOT NULL,
+    EndDateTime DATETIME NOT NULL,
+    AuctionState VARCHAR(50) NOT NULL,
+    CreatedBy VARCHAR(300) NOT NULL,
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    MainImageUrl VARCHAR(300) NULL,
+    MainImageData LONGBLOB NULL,
+    PRIMARY KEY (AuctionId),
+    CONSTRAINT FK_Auctions_Users FOREIGN KEY (CreatedBy) 
+         REFERENCES AspNetUsers(Id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 -- 9. AuctionImages table
 --    Allows multiple images per auction (e.g., for detailed views)
-CREATE TABLE `AuctionImages` (
-    `AuctionImageId` INT NOT NULL AUTO_INCREMENT,
-    `AuctionId` INT NOT NULL,
-    `ImageUrl` VARCHAR(300) NOT NULL,
-    PRIMARY KEY (`AuctionImageId`),
-    CONSTRAINT `FK_AuctionImages_Auctions` FOREIGN KEY (`AuctionId`) 
-         REFERENCES `Auctions`(`AuctionId`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE AuctionImages (
+    AuctionImageId INT NOT NULL AUTO_INCREMENT,
+    AuctionId INT NOT NULL,
+    ImageUrl VARCHAR(300) NOT NULL,
+    PRIMARY KEY (AuctionImageId),
+    CONSTRAINT FK_AuctionImages_Auctions FOREIGN KEY (AuctionId) 
+         REFERENCES Auctions(AuctionId) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 10. AuctionProperties table
 --     Stores key-value pairs for additional auction specifications (see "card-specification" and "properties" pages)
-CREATE TABLE `AuctionProperties` (
-    `AuctionPropertyId` INT NOT NULL AUTO_INCREMENT,
-    `AuctionId` INT NOT NULL,
-    `PropertyName` VARCHAR(100) NOT NULL,
-    `PropertyValue` VARCHAR(300) NOT NULL,
-    PRIMARY KEY (`AuctionPropertyId`),
-    CONSTRAINT `FK_AuctionProperties_Auctions` FOREIGN KEY (`AuctionId`) 
-         REFERENCES `Auctions`(`AuctionId`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE AuctionProperties (
+    AuctionPropertyId INT NOT NULL AUTO_INCREMENT,
+    AuctionId INT NOT NULL,
+    PropertyName VARCHAR(100) NOT NULL,
+    PropertyValue VARCHAR(300) NOT NULL,
+    PRIMARY KEY (AuctionPropertyId),
+    CONSTRAINT FK_AuctionProperties_Auctions FOREIGN KEY (AuctionId) 
+         REFERENCES Auctions(AuctionId) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 11. Bids table
 --     Records bids made on auctions. Used for pages like auction-added-bid, bid-status-tag, etc.
-CREATE TABLE `Bids` (
-    `BidId` INT NOT NULL AUTO_INCREMENT,
-    `AuctionId` INT NOT NULL,
-    `UserId` VARCHAR(300) NOT NULL,
-    `Amount` DECIMAL(10,2) NOT NULL,
-    `CreatedDateTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`BidId`),
-    CONSTRAINT `FK_Bids_Auctions` FOREIGN KEY (`AuctionId`) 
-         REFERENCES `Auctions`(`AuctionId`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `FK_Bids_Users` FOREIGN KEY (`UserId`) 
-         REFERENCES `AspNetUsers`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Bids (
+    BidId INT NOT NULL AUTO_INCREMENT,
+    AuctionId INT NOT NULL,
+    UserId VARCHAR(300) NOT NULL,
+    Amount DECIMAL(10,2) NOT NULL,
+    CreatedDateTime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (BidId),
+    CONSTRAINT FK_Bids_Auctions FOREIGN KEY (AuctionId) 
+         REFERENCES Auctions(AuctionId) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_Bids_Users FOREIGN KEY (UserId) 
+         REFERENCES AspNetUsers(Id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select * from aspnetusers;
+
+
+SELECT
+  Id,
+  FirstName,
+  LastName,
+  Email,
+  ProfilePictureUrl,
+  NULLIF(
+    SUBSTRING_INDEX(ProfilePictureUrl, '/', -1),
+    ''
+  ) AS ProfilePicName
+FROM AspNetUsers;
+
+select * from Auctions;
 
 SELECT 
     a.AuctionId, 
@@ -220,5 +230,46 @@ SELECT
 FROM Auctions a
 INNER JOIN AspNetUsers u ON a.CreatedBy = u.Id;
 
+ALTER TABLE Auctions
+  ADD COLUMN ThumbnailUrl VARCHAR(255) NOT NULL DEFAULT '';
 
+DELETE FROM `Auctions`;
+
+DROP TABLE IF EXISTS `Notifications`;
+--works
+CREATE TABLE `Notifications` (
+  `NotificationId` INT NOT NULL AUTO_INCREMENT,
+  `UserId`         VARCHAR(450) NOT NULL,
+  `AuctionId`      INT          NOT NULL,
+  `Kind`           VARCHAR(50)  NOT NULL COMMENT 'outbid, bid-finished, my-finished',
+  `Title`          VARCHAR(200) NOT NULL COMMENT 'Auction title',
+  `Timestamp`      DATETIME     NOT NULL,
+  `IsRead`         TINYINT(1)   NOT NULL DEFAULT 0,
+  PRIMARY KEY (`NotificationId`),
+  INDEX `IX_Notifications_UserId`    (`UserId`),
+  INDEX `IX_Notifications_AuctionId` (`AuctionId`),
+  CONSTRAINT `FK_Notifications_User`
+    FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers`(`Id`)
+      ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_Notifications_Auction`
+    FOREIGN KEY (`AuctionId`) REFERENCES `Auctions`(`AuctionId`)
+      ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+
+
+--to check
+CREATE TABLE Notifications (
+  NotificationId INT AUTO_INCREMENT PRIMARY KEY,
+  UserId VARCHAR(450) NOT NULL,
+  AuctionId INT NOT NULL,
+  Kind VARCHAR(50) NOT NULL,
+  Title VARCHAR(255) NOT NULL,
+  Timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  IsRead BOOLEAN NOT NULL DEFAULT FALSE,
+  FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE,
+  FOREIGN KEY (AuctionId) REFERENCES Auctions(AuctionId) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
