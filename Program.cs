@@ -1,4 +1,4 @@
-using auctionbay_backend.Data;
+﻿using auctionbay_backend.Data;
 using auctionbay_backend.Models;
 using auctionbay_backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -141,6 +141,27 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 
+//Seed the “Admin” role if it doesnst exist
+using (var scope = app.Services.CreateScope())
+{
+    var roles = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roles.RoleExistsAsync("Admin"))
+    {
+        await roles.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    var users = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var matic = await users.FindByEmailAsync("matic.ozimic@gmail.com");
+    if (matic != null && !await users.IsInRoleAsync(matic, "Admin"))
+        await users.AddToRoleAsync(matic, "Admin");
+
+
+}
+
+
+
+
+
 app.UseCors("AllowAll");
 
 //serve wwwroot/images at /images/*
@@ -231,7 +252,7 @@ static async Task SeedDatabaseAsync(WebApplication app)
     }
 
     
-    var firstNames = new[] { "Marjan", "Gozdni", "Jo�a", "Sramak", "Bogi", "James", "Kate", "Daniel", "Patricia", "Michael" };
+    var firstNames = new[] { "Marjan", "Gozdni", "Joža", "Sramak", "Bogi", "James", "Kate", "Daniel", "Patricia", "Michael" };
     var lastNames = new[] { "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Anderson", "Taylor" };
     var randomTitles = new[]
     {

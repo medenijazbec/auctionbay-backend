@@ -53,7 +53,6 @@ namespace auctionbay_backend.Services
             return result;
         }
 
-        //log in the user and return a JWT token
         public async Task<string?> LoginAsync(LoginDto dto)
         {
             var user = await _userManager.FindByEmailAsync(dto.Email);
@@ -73,27 +72,27 @@ namespace auctionbay_backend.Services
                 return null;
             }
 
-            //generate and return JWT token
-            return GenerateJwtToken(user);
+            // generate and return JWT token (await here!)
+            return await GenerateJwtToken(user);
         }
 
+
         // AuthService.cs  – GenerateJwtToken
-        private string GenerateJwtToken(ApplicationUser user)
+        private async Task<string> GenerateJwtToken(ApplicationUser user)
         {
             var jwt = _configuration.GetSection("Jwt").Get<JwtSettings>();
             var key = Encoding.UTF8.GetBytes(jwt.Key);
 
             var claims = new List<Claim>
     {
-        new Claim(JwtRegisteredClaimNames.Sub,  user.Email),
-        new Claim(JwtRegisteredClaimNames.Jti,  Guid.NewGuid().ToString()),
-
-        //this one is ALREADY enough for Identity
-        new Claim(ClaimTypes.NameIdentifier,    user.Id),
-
-        // add an explicit “id” so ProfileController can pick it up first try
-        new Claim("id",                         user.Id)
+        new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.NameIdentifier, user.Id),
+        new Claim("id", user.Id)
     };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var token = new JwtSecurityTokenHandler().CreateToken(
                 new SecurityTokenDescriptor
@@ -109,6 +108,7 @@ namespace auctionbay_backend.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
 
         //Forgot password: generate a password reset token and  TODO: email it
