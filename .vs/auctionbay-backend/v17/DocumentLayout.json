@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\controllers\\imageuploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:controllers\\imageuploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -158,7 +158,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
@@ -170,8 +170,7 @@
               "RelativeToolTip": "auctionbay-backend.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-04-17T15:24:12.866Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T15:24:12.866Z"
             },
             {
               "$type": "Document",
@@ -183,8 +182,7 @@
               "RelativeToolTip": "databaseCRUD-forbackup.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-04-17T15:24:15.748Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T15:24:15.748Z"
             },
             {
               "$type": "Document",
@@ -196,25 +194,24 @@
               "RelativeToolTip": "Controllers\\ProfileController.cs",
               "ViewState": "AgIAANkAAAAAAAAAAAAAABUBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:15:57.377Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:15:57.377Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ImageUploadController.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ImageUploadController.cs",
               "RelativeDocumentMoniker": "Controllers\\ImageUploadController.cs",
               "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ImageUploadController.cs",
               "RelativeToolTip": "Controllers\\ImageUploadController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwD0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-12T23:24:14.807Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AuctionsController.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuctionsController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuctionsController.cs",
@@ -235,8 +232,7 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-24T13:23:53.25Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-24T13:23:53.25Z"
             },
             {
               "$type": "Document",
@@ -248,8 +244,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAcBAAAAAAAAAAAAAEMBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:21:39.334Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:21:39.334Z"
             },
             {
               "$type": "Document",
@@ -261,8 +256,7 @@
               "RelativeToolTip": "Services\\NotificationService.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAYwDgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-29T22:33:52.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-29T22:33:52.311Z"
             },
             {
               "$type": "Document",
@@ -274,8 +268,7 @@
               "RelativeToolTip": "Services\\INotificationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-29T22:33:36.104Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-29T22:33:36.104Z"
             },
             {
               "$type": "Document",
@@ -287,8 +280,7 @@
               "RelativeToolTip": "Services\\IAuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:24:14.627Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:24:14.627Z"
             },
             {
               "$type": "Document",
@@ -300,8 +292,7 @@
               "RelativeToolTip": "Services\\IAuctionService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:15:21.218Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:15:21.218Z"
             },
             {
               "$type": "Document",
@@ -313,8 +304,7 @@
               "RelativeToolTip": "Services\\AuthService.cs",
               "ViewState": "AgIAAGUAAAAAAAAAAAAiwKAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:24:21.788Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:24:21.788Z"
             },
             {
               "$type": "Document",
@@ -326,8 +316,7 @@
               "RelativeToolTip": "Services\\AuctionService.cs",
               "ViewState": "AgIAAC0BAAAAAAAAAAAAAGkBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:15:31.896Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:15:31.896Z"
             },
             {
               "$type": "Document",
@@ -339,8 +328,7 @@
               "RelativeToolTip": "Models\\Notification.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-29T22:29:11.377Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-29T22:29:11.377Z"
             },
             {
               "$type": "Document",
@@ -352,8 +340,7 @@
               "RelativeToolTip": "Models\\JwtSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T21:51:30.44Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T21:51:30.44Z"
             },
             {
               "$type": "Document",
@@ -365,8 +352,7 @@
               "RelativeToolTip": "Models\\Bid.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:13:01.046Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:13:01.046Z"
             },
             {
               "$type": "Document",
@@ -378,8 +364,7 @@
               "RelativeToolTip": "Models\\Auction.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:12:51.455Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:12:51.455Z"
             },
             {
               "$type": "Document",
@@ -391,8 +376,7 @@
               "RelativeToolTip": "Models\\ApplicationUser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:24:06.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:24:06.054Z"
             },
             {
               "$type": "Document",
@@ -404,8 +388,7 @@
               "RelativeToolTip": "DTOs\\UpdateProfileDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T18:10:01.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T18:10:01.646Z"
             },
             {
               "$type": "Document",
@@ -417,8 +400,7 @@
               "RelativeToolTip": "DTOs\\UpdatePasswordDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:15:07.816Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:15:07.816Z"
             },
             {
               "$type": "Document",
@@ -430,8 +412,7 @@
               "RelativeToolTip": "DTOs\\ResetPasswordDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:23:47.655Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:23:47.655Z"
             },
             {
               "$type": "Document",
@@ -443,8 +424,7 @@
               "RelativeToolTip": "DTOs\\RegisterDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:23:17.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:23:17.46Z"
             },
             {
               "$type": "Document",
@@ -456,8 +436,7 @@
               "RelativeToolTip": "DTOs\\LoginDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:23:25.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:23:25.677Z"
             },
             {
               "$type": "Document",
@@ -469,8 +448,7 @@
               "RelativeToolTip": "DTOs\\ForgotPasswordDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:23:39.208Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:23:39.208Z"
             },
             {
               "$type": "Document",
@@ -482,8 +460,7 @@
               "RelativeToolTip": "DTOs\\BidDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:14:57.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:14:57.26Z"
             },
             {
               "$type": "Document",
@@ -495,8 +472,7 @@
               "RelativeToolTip": "DTOs\\AuctionUpdateFormDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T18:26:58.262Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-25T18:26:58.262Z"
             },
             {
               "$type": "Document",
@@ -508,8 +484,7 @@
               "RelativeToolTip": "DTOs\\AuctionUpdateDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:14:47.525Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:14:47.525Z"
             },
             {
               "$type": "Document",
@@ -521,8 +496,7 @@
               "RelativeToolTip": "DTOs\\AuctionResponseDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T02:32:03.516Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-12T02:32:03.516Z"
             },
             {
               "$type": "Document",
@@ -534,8 +508,7 @@
               "RelativeToolTip": "DTOs\\AuctionCreateFormDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T22:52:20.578Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T22:52:20.578Z"
             },
             {
               "$type": "Document",
@@ -547,8 +520,7 @@
               "RelativeToolTip": "DTOs\\AuctionCreateDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:14:40.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T22:14:40.102Z"
             },
             {
               "$type": "Document",
@@ -560,8 +532,7 @@
               "RelativeToolTip": "DTOs\\AdminUserUpdateDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T22:28:24.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T22:28:24.406Z"
             },
             {
               "$type": "Document",
@@ -573,8 +544,7 @@
               "RelativeToolTip": "DTOs\\AdminUserListDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T22:28:00.019Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T22:28:00.019Z"
             },
             {
               "$type": "Document",
@@ -586,8 +556,7 @@
               "RelativeToolTip": "DTOs\\AdminUserDetailDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T22:28:12.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T22:28:12.637Z"
             },
             {
               "$type": "Document",
@@ -599,8 +568,7 @@
               "RelativeToolTip": "DTOs\\AdminAuctionUpdateDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T22:28:36.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T22:28:36.26Z"
             },
             {
               "$type": "Document",
@@ -612,8 +580,7 @@
               "RelativeToolTip": "Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:22:38.573Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:22:38.573Z"
             },
             {
               "$type": "Document",
@@ -625,8 +592,7 @@
               "RelativeToolTip": "Controllers\\AuthController.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAswEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:22:59.173Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T22:22:59.173Z"
             },
             {
               "$type": "Document",
@@ -638,8 +604,7 @@
               "RelativeToolTip": "Controllers\\AdminController.cs",
               "ViewState": "AgIAALoAAAAAAAAAAAAUwPQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T22:28:51.116Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T22:28:51.116Z"
             }
           ]
         }
