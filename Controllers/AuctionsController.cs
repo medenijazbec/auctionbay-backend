@@ -75,8 +75,15 @@ namespace auctionbay_backend.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] AuctionCreateFormDto form)
         {
-            var user = await CurrentUserAsync();
+
+
+
+                        var user = await CurrentUserAsync();
             if (user is null) return Unauthorized();
+
+
+               const long MAX_BYTES = 10 * 1024 * 1024;
+            var allowed = new[] { "image/jpeg", "image/png", "image/gif" };
 
             var imagesFolder = Path.Combine(_env.WebRootPath, "images");
             Directory.CreateDirectory(imagesFolder);
@@ -86,7 +93,12 @@ namespace auctionbay_backend.Controllers
             string thumbnailUrl = "";
             if (form.Image is { Length: > 0 })
             {
-                var folder = Path.Combine(_env.WebRootPath, "images");
+                //size/type checks ---
+                if (form.Image.Length > MAX_BYTES || !allowed.Contains(form.Image.ContentType))
+                return BadRequest(new { error = "Invalid image upload." });
+                //end checks ---
+
+                                var folder = Path.Combine(_env.WebRootPath, "images");
                 Directory.CreateDirectory(folder);
 
                 var name = $"{Guid.NewGuid():N}{Path.GetExtension(form.Image.FileName)}";
