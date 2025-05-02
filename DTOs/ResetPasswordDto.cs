@@ -1,4 +1,6 @@
-﻿namespace auctionbay_backend.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace auctionbay_backend.DTOs
 {
     public class ResetPasswordDto
     {
@@ -7,7 +9,9 @@
         public string Token { get; set; } = string.Empty;
 
         //new password and confirmation
+        [Required, StringLength(100, MinimumLength = 8)]
         public string NewPassword { get; set; } = string.Empty;
+        [Required, Compare("NewPassword", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

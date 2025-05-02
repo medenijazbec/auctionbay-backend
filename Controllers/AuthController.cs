@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using auctionbay_backend.DTOs;
+using auctionbay_backend.Models;
 using auctionbay_backend.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace auctionbay_backend.Controllers
@@ -20,13 +22,34 @@ namespace auctionbay_backend.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // delegate to your AuthService
             var result = await _authService.RegisterAsync(dto);
             if (!result.Succeeded)
-            {
                 return BadRequest(result.Errors);
-            }
+
+            // email confirm step comes later
             return Ok(new { Message = "Registration successful." });
         }
+
+        /*
+        // GET: api/Auth/confirm-email
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return NotFound();
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            return Ok(new { Message = "Email confirmed successfully." });
+        }
+        */
+
 
         // POST: api/Auth/login
         [HttpPost("login")]

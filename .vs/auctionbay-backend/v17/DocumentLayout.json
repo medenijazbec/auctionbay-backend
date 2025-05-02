@@ -3,6 +3,46 @@
   "WorkspaceRootPath": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\updatepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\updatepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\updateprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\updateprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\adminauctionupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\adminauctionupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\auctioncreateformdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\auctioncreateformdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\futuredateattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\futuredateattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\auctioncreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\auctioncreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -75,26 +115,6 @@
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\updateprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\updateprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\updatepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\updatepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -115,14 +135,6 @@
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\auctionresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\auctioncreateformdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\auctioncreateformdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\auctioncreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\auctioncreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\adminuserupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\adminuserupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -135,16 +147,8 @@
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\adminuserdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\dtos\\adminauctionupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:dtos\\adminauctionupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1CDDD030-0BEA-401C-A037-043839345585}|auctionbay-backend.csproj|c:\\users\\matic\\desktop\\auctionbay\\auctionbay-backend\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -158,61 +162,154 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProfileController.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ProfileController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProfileController.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ProfileController.cs",
-              "RelativeToolTip": "Controllers\\ProfileController.cs",
-              "ViewState": "AgIAANkAAAAAAAAAAAAAABUBAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\RegisterDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\RegisterDto.cs",
+              "RelativeToolTip": "DTOs\\RegisterDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:15:57.377Z"
+              "WhenOpened": "2025-04-10T22:23:17.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UpdateProfileDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdateProfileDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UpdateProfileDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdateProfileDto.cs",
+              "RelativeToolTip": "DTOs\\UpdateProfileDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T18:10:01.646Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ImageUploadController.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ImageUploadController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ImageUploadController.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ImageUploadController.cs",
-              "RelativeToolTip": "Controllers\\ImageUploadController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwD0AAAAIAAAAAAAAAA==",
+              "Title": "UpdatePasswordDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdatePasswordDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UpdatePasswordDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdatePasswordDto.cs",
+              "RelativeToolTip": "DTOs\\UpdatePasswordDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T23:24:14.807Z",
+              "WhenOpened": "2025-04-11T22:15:07.816Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AuctionsController.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuctionsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuctionsController.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuctionsController.cs",
-              "RelativeToolTip": "Controllers\\AuctionsController.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAqwFUAAAAMAAAAAAAAAA==",
+              "Title": "ResetPasswordDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\ResetPasswordDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\ResetPasswordDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\ResetPasswordDto.cs",
+              "RelativeToolTip": "DTOs\\ResetPasswordDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:16:47.286Z"
+              "WhenOpened": "2025-04-10T22:23:47.655Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAADwvzQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T22:22:59.173Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AdminAuctionUpdateDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AdminAuctionUpdateDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\AdminAuctionUpdateDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AdminAuctionUpdateDto.cs",
+              "RelativeToolTip": "DTOs\\AdminAuctionUpdateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T22:28:36.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AuctionCreateFormDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateFormDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\AuctionCreateFormDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateFormDto.cs",
+              "RelativeToolTip": "DTOs\\AuctionCreateFormDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T22:52:20.578Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FutureDateAttribute.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\FutureDateAttribute.cs",
+              "RelativeDocumentMoniker": "DTOs\\FutureDateAttribute.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\FutureDateAttribute.cs",
+              "RelativeToolTip": "DTOs\\FutureDateAttribute.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T19:30:52.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\LoginDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\LoginDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\LoginDto.cs",
+              "RelativeToolTip": "DTOs\\LoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T22:23:25.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAJcAAAAAAAAAAAAAALcAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAEYAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T22:21:39.334Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
+              "Title": "AuctionCreateDto.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\AuctionCreateDto.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateDto.cs",
+              "RelativeToolTip": "DTOs\\AuctionCreateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T22:14:40.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "databaseCRUD-forbackup.txt",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\databaseCRUD-forbackup.txt",
               "RelativeDocumentMoniker": "databaseCRUD-forbackup.txt",
@@ -224,7 +321,43 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
+              "Title": "AuctionsController.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuctionsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuctionsController.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuctionsController.cs",
+              "RelativeToolTip": "Controllers\\AuctionsController.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAqwFUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T22:16:47.286Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ImageUploadController.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ImageUploadController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ImageUploadController.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ImageUploadController.cs",
+              "RelativeToolTip": "Controllers\\ImageUploadController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwD0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T23:24:14.807Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ProfileController.cs",
+              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ProfileController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProfileController.cs",
+              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\ProfileController.cs",
+              "RelativeToolTip": "Controllers\\ProfileController.cs",
+              "ViewState": "AgIAANkAAAAAAAAAAAAAABUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T22:15:57.377Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "auctionbay-backend.http",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\auctionbay-backend.http",
               "RelativeDocumentMoniker": "auctionbay-backend.http",
@@ -236,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 16,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -248,7 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 17,
               "Title": "NotificationService.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\NotificationService.cs",
               "RelativeDocumentMoniker": "Services\\NotificationService.cs",
@@ -260,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 18,
               "Title": "INotificationService.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\INotificationService.cs",
               "RelativeDocumentMoniker": "Services\\INotificationService.cs",
@@ -272,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 19,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\IAuthService.cs",
               "RelativeDocumentMoniker": "Services\\IAuthService.cs",
@@ -284,7 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 20,
               "Title": "IAuctionService.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\IAuctionService.cs",
               "RelativeDocumentMoniker": "Services\\IAuctionService.cs",
@@ -296,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 21,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",
@@ -308,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 22,
               "Title": "AuctionService.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Services\\AuctionService.cs",
               "RelativeDocumentMoniker": "Services\\AuctionService.cs",
@@ -320,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 23,
               "Title": "Notification.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Models\\Notification.cs",
               "RelativeDocumentMoniker": "Models\\Notification.cs",
@@ -332,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 24,
               "Title": "JwtSettings.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Models\\JwtSettings.cs",
               "RelativeDocumentMoniker": "Models\\JwtSettings.cs",
@@ -344,7 +477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 25,
               "Title": "Bid.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Models\\Bid.cs",
               "RelativeDocumentMoniker": "Models\\Bid.cs",
@@ -356,7 +489,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 26,
               "Title": "Auction.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Models\\Auction.cs",
               "RelativeDocumentMoniker": "Models\\Auction.cs",
@@ -368,7 +501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 27,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Models\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "Models\\ApplicationUser.cs",
@@ -380,67 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "UpdateProfileDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdateProfileDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\UpdateProfileDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdateProfileDto.cs",
-              "RelativeToolTip": "DTOs\\UpdateProfileDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T18:10:01.646Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "UpdatePasswordDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdatePasswordDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\UpdatePasswordDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\UpdatePasswordDto.cs",
-              "RelativeToolTip": "DTOs\\UpdatePasswordDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:15:07.816Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "ResetPasswordDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\ResetPasswordDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\ResetPasswordDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\ResetPasswordDto.cs",
-              "RelativeToolTip": "DTOs\\ResetPasswordDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:23:47.655Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "RegisterDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\RegisterDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\RegisterDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\RegisterDto.cs",
-              "RelativeToolTip": "DTOs\\RegisterDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:23:17.46Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "LoginDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\LoginDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\LoginDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\LoginDto.cs",
-              "RelativeToolTip": "DTOs\\LoginDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:23:25.677Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 28,
               "Title": "ForgotPasswordDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\ForgotPasswordDto.cs",
               "RelativeDocumentMoniker": "DTOs\\ForgotPasswordDto.cs",
@@ -452,7 +525,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 29,
               "Title": "BidDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\BidDto.cs",
               "RelativeDocumentMoniker": "DTOs\\BidDto.cs",
@@ -464,7 +537,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 30,
               "Title": "AuctionUpdateFormDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionUpdateFormDto.cs",
               "RelativeDocumentMoniker": "DTOs\\AuctionUpdateFormDto.cs",
@@ -476,7 +549,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 31,
               "Title": "AuctionUpdateDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionUpdateDto.cs",
               "RelativeDocumentMoniker": "DTOs\\AuctionUpdateDto.cs",
@@ -488,7 +561,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 32,
               "Title": "AuctionResponseDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionResponseDto.cs",
               "RelativeDocumentMoniker": "DTOs\\AuctionResponseDto.cs",
@@ -500,31 +573,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "AuctionCreateFormDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateFormDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\AuctionCreateFormDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateFormDto.cs",
-              "RelativeToolTip": "DTOs\\AuctionCreateFormDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T22:52:20.578Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "AuctionCreateDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\AuctionCreateDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AuctionCreateDto.cs",
-              "RelativeToolTip": "DTOs\\AuctionCreateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T22:14:40.102Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "AdminUserUpdateDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AdminUserUpdateDto.cs",
               "RelativeDocumentMoniker": "DTOs\\AdminUserUpdateDto.cs",
@@ -536,7 +585,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "AdminUserListDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AdminUserListDto.cs",
               "RelativeDocumentMoniker": "DTOs\\AdminUserListDto.cs",
@@ -548,7 +597,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 35,
               "Title": "AdminUserDetailDto.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AdminUserDetailDto.cs",
               "RelativeDocumentMoniker": "DTOs\\AdminUserDetailDto.cs",
@@ -560,19 +609,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "AdminAuctionUpdateDto.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AdminAuctionUpdateDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\AdminAuctionUpdateDto.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\DTOs\\AdminAuctionUpdateDto.cs",
-              "RelativeToolTip": "DTOs\\AdminAuctionUpdateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T22:28:36.26Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
@@ -584,19 +621,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAswEMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T22:22:59.173Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\Users\\Matic\\Desktop\\auctionbay\\auctionbay-backend\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "Controllers\\AdminController.cs",

@@ -57,7 +57,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //configure ASP.NET Core Identity.
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    //customize options if needed (password requirements).
+    // Password settings
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 8;
+
+    // User settings
+    options.User.RequireUniqueEmail = true;
+
+    // Sign-in settings
+    //options.SignIn.RequireConfirmedEmail = true;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();

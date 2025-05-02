@@ -1,9 +1,13 @@
-﻿namespace auctionbay_backend.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace auctionbay_backend.DTOs
 {
     public class LoginDto
     {
-        // Matching your login page: "Email", "Password"
+        [Required, EmailAddress]
         public string Email { get; set; } = string.Empty;
+
+        [Required]
         public string Password { get; set; } = string.Empty;
     }
 }
