@@ -23,23 +23,26 @@ namespace auctionbay_backend.Controllers
         private readonly UserManager<ApplicationUser> _users;
         private readonly ApplicationDbContext _db;
         private readonly IAuctionService _auctionsSvc;
+        private readonly ILogger<AdminController> _logger;
 
         public AdminController(
-            UserManager<ApplicationUser> users,
-            ApplicationDbContext db,
-            IAuctionService auctionsSvc)
+          UserManager<ApplicationUser> users,
+          ApplicationDbContext db,
+          IAuctionService auctionsSvc,
+          ILogger<AdminController> logger)
         {
             _users = users;
             _db = db;
             _auctionsSvc = auctionsSvc;
+            _logger = logger;
         }
 
         // GET api/Admin/users?search=&page=&pageSize=
         [HttpGet("users")]
         public async Task<IActionResult> SearchUsers(
-            [FromQuery] string? search,
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 20)
+          [FromQuery] string? search,
+          [FromQuery] int page = 1,
+          [FromQuery] int pageSize = 20)
         {
             var query = _users.Users.AsQueryable();
 
@@ -47,25 +50,25 @@ namespace auctionbay_backend.Controllers
             {
                 search = search.Trim().ToLower();
                 query = query.Where(u =>
-                    u.Email.ToLower().Contains(search)
-                    || u.FirstName.ToLower().Contains(search)
-                    || u.LastName.ToLower().Contains(search));
+                  u.Email.ToLower().Contains(search) ||
+                  u.FirstName.ToLower().Contains(search) ||
+                  u.LastName.ToLower().Contains(search));
             }
 
             var total = await query.CountAsync();
             var users = await query
-                .OrderBy(u => u.Email)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Select(u => new AdminUserListDto
-                {
-                    Id = u.Id,
-                    Email = u.Email!,
-                    FirstName = u.FirstName!,
-                    LastName = u.LastName!,
-                    ProfilePictureUrl = u.ProfilePictureUrl!
-                })
-                .ToListAsync();
+              .OrderBy(u => u.Email)
+              .Skip((page - 1) * pageSize)
+              .Take(pageSize)
+              .Select(u => new AdminUserListDto
+              {
+                  Id = u.Id,
+                  Email = u.Email!,
+                  FirstName = u.FirstName!,
+                  LastName = u.LastName!,
+                  ProfilePictureUrl = u.ProfilePictureUrl!
+              })
+              .ToListAsync();
 
             return Ok(new
             {
@@ -101,8 +104,8 @@ namespace auctionbay_backend.Controllers
         // PUT api/Admin/users/{id}
         [HttpPut("users/{id}")]
         public async Task<IActionResult> UpdateUser(
-            string id,
-            [FromBody] AdminUserUpdateDto dto)
+          string id,
+          [FromBody] AdminUserUpdateDto dto)
         {
             var u = await _users.FindByIdAsync(id);
             if (u == null) return NotFound();
@@ -111,7 +114,10 @@ namespace auctionbay_backend.Controllers
             if (!string.Equals(u.Email, dto.Email, StringComparison.OrdinalIgnoreCase))
             {
                 if (await _users.FindByEmailAsync(dto.Email) != null)
-                    return Conflict(new { error = "Email already taken." });
+                    return Conflict(new
+                    {
+                        error = "Email already taken."
+                    });
             }
 
             u.FirstName = dto.FirstName;
@@ -123,7 +129,16 @@ namespace auctionbay_backend.Controllers
 
             var res = await _users.UpdateAsync(u);
             if (!res.Succeeded)
-                return BadRequest(res.Errors);
+            {
+                // log full details server‐side
+                _logger.LogError("Admin.UpdateUser failed for {UserId}: {Errors}",
+                  u.Id, string.Join("; ", res.Errors.Select(e => e.Description)));
+                // return only a generic error
+                return BadRequest(new
+                {
+                    error = "Could not update user."
+                });
+            }
 
             return NoContent();
         }
@@ -135,13 +150,21 @@ namespace auctionbay_backend.Controllers
             var u = await _users.FindByIdAsync(id);
             if (u == null) return NotFound();
 
-            var res = await _users.DeleteAsync(u);
+            var res = await _users.UpdateAsync(u);
             if (!res.Succeeded)
-                return BadRequest(res.Errors);
+            {
+                // log full details server‐side
+                _logger.LogError("Admin.UpdateUser failed for {UserId}: {Errors}",
+                  u.Id, string.Join("; ", res.Errors.Select(e => e.Description)));
+                // return only a generic error
+                return BadRequest(new
+                {
+                    error = "Could not update user."
+                });
+            }
 
             return NoContent();
         }
-
 
         // GET api/Admin/users/{id}/auctions
         [HttpGet("users/{id}/auctions")]
@@ -155,9 +178,9 @@ namespace auctionbay_backend.Controllers
         // GET api/Admin/auctions?search=&page=&pageSize=
         [HttpGet("auctions")]
         public async Task<IActionResult> SearchAuctions(
-            [FromQuery] string? search,
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 20)
+          [FromQuery] string? search,
+          [FromQuery] int page = 1,
+          [FromQuery] int pageSize = 20)
         {
             var q = _db.Auctions.AsNoTracking();
 
@@ -166,17 +189,17 @@ namespace auctionbay_backend.Controllers
                 search = search.Trim().ToLower();
                 // simple title/description search; you can join AspNetUsers similarly
                 q = q.Where(a =>
-                    a.Title.ToLower().Contains(search)
-                    || a.Description.ToLower().Contains(search));
+                  a.Title.ToLower().Contains(search) ||
+                  a.Description.ToLower().Contains(search));
             }
 
             var total = await q.CountAsync();
             var slice = await q
-                .OrderByDescending(a => a.CreatedAt)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Select(a => a.AuctionId)
-                .ToListAsync();
+              .OrderByDescending(a => a.CreatedAt)
+              .Skip((page - 1) * pageSize)
+              .Take(pageSize)
+              .Select(a => a.AuctionId)
+              .ToListAsync();
 
             // map each id via your service (to get DTO)
             var items = new List<AuctionResponseDto>();
@@ -207,8 +230,8 @@ namespace auctionbay_backend.Controllers
         // PUT api/Admin/auctions/{id}
         [HttpPut("auctions/{id:int}")]
         public async Task<IActionResult> UpdateAuction(
-            int id,
-            [FromBody] AdminAuctionUpdateDto dto)
+          int id,
+          [FromBody] AdminAuctionUpdateDto dto)
         {
             var a = await _db.Auctions.FindAsync(id);
             if (a == null) return NotFound();
