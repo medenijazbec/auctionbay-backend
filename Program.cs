@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add CORS support
-builder.Services.AddCors(options =>
+/*builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
@@ -25,6 +25,23 @@ builder.Services.AddCors(options =>
           .AllowAnyOrigin()      
           .AllowAnyHeader()     
           .AllowAnyMethod();     
+    });
+});*/
+
+//allow your frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+          .WithOrigins(
+            "http://localhost:5173",  //React dev server
+            "https://localhost:7056"  //swagger UI origin
+          )
+          .AllowAnyHeader()
+          .AllowAnyMethod()
+          //use cookies or other credentials in fetch:
+          .AllowCredentials();
     });
 });
 
@@ -162,7 +179,9 @@ using (var scope = app.Services.CreateScope())
 
 
 
-app.UseCors("AllowAll");
+//app.UseCors("AllowAll");
+
+app.UseCors("FrontendPolicy");
 
 //serve wwwroot/images at /images/*
 app.UseStaticFiles(new StaticFileOptions
