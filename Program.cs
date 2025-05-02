@@ -10,6 +10,7 @@ using System.Text;
 using System.IO;
 using System.Security.Claims;
 using Microsoft.Extensions.FileProviders;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -168,6 +169,15 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// 1) Enforce HTTPS + HSTS
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    // Adds Strict-Transport-Security header
+    app.UseHsts();
+}
+
+
 
 //Seed the “Admin” role if it doesnst exist
 using (var scope = app.Services.CreateScope())
@@ -214,15 +224,66 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-//enable serving static files (e.g., images uploaded by users)
-app.UseStaticFiles();
+
+// STATIC FILES: *only* expose your /images folder here
+
+//Building a provider that points at wwwroot/images
+var imagesPath = Path.Combine(builder.Environment.WebRootPath, "images");
+var imagesProvider = new PhysicalFileProvider(imagesPath);
+
+//only this one middleware to serve /images/* → wwwroot/images/*
+app.UseStaticFiles(new StaticFileOptions
+{
+   FileProvider = imagesProvider,
+   RequestPath = "/images",
+    //never serve unknown file types as a fallback
+    ServeUnknownFileTypes = false,
+
+});
+
+//NO other `UseStaticFiles()` calls
+//NO calls to `UseDirectoryBrowser()`
+
 
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+// 3) Security headers
+app.Use(async (context, next) =>
+{
+    var headers = context.Response.Headers;
+
+    // Prevent MIME-type sniffing
+    headers["X-Content-Type-Options"] = "nosniff";
+
+    // Protect against clickjacking
+    headers["X-Frame-Options"] = "DENY";
+
+    // Control Referer header
+    headers["Referrer-Policy"] = "no-referrer";
+
+    // Disable certain powerful features
+    headers["Permissions-Policy"] =
+        "geolocation=(), microphone=(), camera=()";
+
+    //A fairly strict CSP; 'self' to be adjusted as needed
+    headers["Content-Security-Policy"] =
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+        "font-src 'self' https://fonts.gstatic.com; " +
+        "img-src 'self' data:; " +
+        "connect-src 'self' https://localhost:7056; " +
+        "frame-ancestors 'none';";
+
+    await next();
+});
 app.MapControllers();
-app.UseStaticFiles();
+
+
 
 //vall the seeding method after building but before running
 await SeedDatabaseAsync(app);
