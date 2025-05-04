@@ -1,0 +1,11 @@
+sudo docker build -t auctionbay-backend:latest .
+sudo docker stop  auctionbay-api
+sudo docker rm    auctionbay-api
+
+
+sudo docker run -d --name auctionbay-api --restart unless-stopped \
+  --network auctionbay-net -p 8080:8080 \
+  -v /mnt/Files/databases/auctionbay-images:/app/wwwroot/images \
+  --env-file .env-api \
+  auctionbay-backend:latest
+
