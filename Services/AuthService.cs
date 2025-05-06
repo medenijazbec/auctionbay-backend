@@ -19,16 +19,22 @@ namespace auctionbay_backend.Services
         private readonly IConfiguration _configuration;
 
         public AuthService(
-             UserManager<ApplicationUser> userManager,
-             SignInManager<ApplicationUser> signInManager,
-             IConfiguration configuration)
+          UserManager<ApplicationUser> userManager,
+          SignInManager<ApplicationUser> signInManager,
+          IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
         }
 
-        //register a new user
+        /// <summary>
+        /// Registers a new user with the specified credentials.
+        /// </summary>
+        /// <param name="dto">Data transfer object containing registration details.</param>
+        /// <returns>
+        /// An <see cref="IdentityResult"/> indicating success or failure.
+        /// </returns>
         public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
         {
             if (dto.Password != dto.ConfirmPassword)
@@ -52,7 +58,13 @@ namespace auctionbay_backend.Services
             var result = await _userManager.CreateAsync(user, dto.Password);
             return result;
         }
-
+        /// <summary>
+        /// Attempts to sign in a user with the provided credentials and returns a JWT on success.
+        /// </summary>
+        /// <param name="dto">Data transfer object containing login credentials.</param>
+        /// <returns>
+        /// A JWT string if login succeeds; otherwise <c>null</c>.
+        /// </returns>
         public async Task<string?> LoginAsync(LoginDto dto)
         {
             var user = await _userManager.FindByEmailAsync(dto.Email);
@@ -62,10 +74,10 @@ namespace auctionbay_backend.Services
             }
 
             var signInResult = await _signInManager.PasswordSignInAsync(
-                 user.UserName,
-                 dto.Password,
-                 isPersistent: false,
-                 lockoutOnFailure: false);
+              user.UserName,
+              dto.Password,
+              isPersistent: false,
+              lockoutOnFailure: false);
 
             if (!signInResult.Succeeded)
             {
@@ -76,41 +88,47 @@ namespace auctionbay_backend.Services
             return await GenerateJwtToken(user);
         }
 
-
+        /// <summary>
+        /// Generates a JWT token for the specified user based on configuration settings.
+        /// </summary>
+        /// <param name="user">The authenticated user.</param>
+        /// <returns>A JWT string.</returns>
         // AuthService.cs  – GenerateJwtToken
         private async Task<string> GenerateJwtToken(ApplicationUser user)
         {
             var jwt = _configuration.GetSection("Jwt").Get<JwtSettings>();
             var key = Encoding.UTF8.GetBytes(jwt.Key);
 
-            var claims = new List<Claim>
-    {
+            var claims = new List<Claim> {
         new Claim(JwtRegisteredClaimNames.Sub, user.Email),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         new Claim(ClaimTypes.NameIdentifier, user.Id),
         new Claim("id", user.Id)
-    };
+      };
 
             var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var token = new JwtSecurityTokenHandler().CreateToken(
-                new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.UtcNow.AddMinutes(jwt.ExpiresInMinutes),
-                    Issuer = jwt.Issuer,
-                    Audience = jwt.Audience,
-                    SigningCredentials = new SigningCredentials(
-                                            new SymmetricSecurityKey(key),
-                                            SecurityAlgorithms.HmacSha256)
-                });
+              new SecurityTokenDescriptor
+              {
+                  Subject = new ClaimsIdentity(claims),
+                  Expires = DateTime.UtcNow.AddMinutes(jwt.ExpiresInMinutes),
+                  Issuer = jwt.Issuer,
+                  Audience = jwt.Audience,
+                  SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256)
+              });
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
-
+        /// <summary>
+        /// Initiates a password reset process by generating a reset token and (optionally) emailing it.
+        /// </summary>
+        /// <param name="dto">Data transfer object containing the user's email.</param>
+        /// <returns>A successful <see cref="IdentityResult"/> regardless of email existence.</returns>
         //Forgot password: generate a password reset token and  TODO: email it
         public async Task<IdentityResult> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
@@ -129,6 +147,13 @@ namespace auctionbay_backend.Services
             return IdentityResult.Success;
         }
 
+        /// <summary>
+        /// Resets the user's password using a valid reset token and new password.
+        /// </summary>
+        /// <param name="dto">Data transfer object containing reset token and new password details.</param>
+        /// <returns>
+        /// An <see cref="IdentityResult"/> indicating success or failure.
+        /// </returns>
         //reset the users password using the provided token
         public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordDto dto)
         {

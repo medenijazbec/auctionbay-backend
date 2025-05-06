@@ -32,7 +32,12 @@ namespace auctionbay_backend.Controllers
             _logger = logger;
         }
 
-        /* ─────────────────── helpers ─────────────────── */
+        /// <summary>
+        /// Retrieves the currently authenticated <see cref="ApplicationUser"/> based on JWT claims.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ApplicationUser"/> if authenticated; otherwise <c>null</c>.
+        /// </returns>
         private Task<ApplicationUser?> CurrentUserAsync()
         {
             var id = User.FindFirstValue("id") ??
@@ -40,7 +45,13 @@ namespace auctionbay_backend.Controllers
             return id is null ? Task.FromResult<ApplicationUser?>(null) :
               _userManager.FindByIdAsync(id);
         }
-
+        /// <summary>
+        /// Retrieves the list of notifications for the current user.
+        /// </summary>
+        /// <returns>
+        /// <c>200 OK</c> with a list of notifications;
+        /// <c>401 Unauthorized</c> if the user is not authenticated.
+        /// </returns>
         [HttpGet("notifications")]
         public async Task<IActionResult> GetNotifications()
         {
@@ -49,7 +60,14 @@ namespace auctionbay_backend.Controllers
             var list = await _notificationService.GetForUserAsync(user.Id);
             return Ok(list);
         }
-
+        /// <summary>
+        /// Marks a specific notification as read.
+        /// </summary>
+        /// <param name="id">The notification identifier.</param>
+        /// <returns>
+        /// <c>204 No Content</c> on success;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
         [HttpPut("notifications/{id}/read")]
         public async Task<IActionResult> MarkNotificationRead(int id)
         {
@@ -58,7 +76,13 @@ namespace auctionbay_backend.Controllers
             await _notificationService.MarkAsReadAsync(user.Id, id);
             return NoContent();
         }
-
+        /// <summary>
+        /// Marks all notifications for the current user as read.
+        /// </summary>
+        /// <returns>
+        /// <c>204 No Content</c> on success;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
         /*mark all as read*/
         [HttpPut("notifications/markAllRead")]
         public async Task<IActionResult> MarkAllRead()
@@ -69,8 +93,16 @@ namespace auctionbay_backend.Controllers
             await _notificationService.MarkAllAsReadAsync(user.Id);
             return NoContent();
         }
+        /// <summary>
+        /// Deletes one of the current user's auctions.
+        /// </summary>
+        /// <param name="id">The auction identifier.</param>
+        /// <returns>
+        /// <c>204 No Content</c> on success;
+        /// <c>400 Bad Request</c> with error message if deletion fails;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
 
-        #region─────── DELETE MY AUCTION───────
         [HttpDelete("auction/{id:int}")]
         public async Task<IActionResult> DeleteAuction(int id)
         {
@@ -93,10 +125,17 @@ namespace auctionbay_backend.Controllers
                 });
             }
         }
-        #endregion
 
-        #region─────── UPDATE(multipart)──────
-        // DTO lives just below ↓
+        /// <summary>
+        /// Updates an existing auction for the current user with multipart data support,
+        /// including optional image upload.
+        /// </summary>
+        /// <param name="id">The auction identifier.</param>
+        /// <param name="form">Form DTO containing updated auction fields and image.</param>
+        /// <returns>
+        /// <c>200 OK</c> with the updated auction DTO;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
         [HttpPut("auction/{id:int}")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateAuctionMultipart(
@@ -139,8 +178,14 @@ namespace auctionbay_backend.Controllers
             var updated = await _auctionService.UpdateAuctionAsync(user.Id, id, dto);
             return Ok(updated);
         }
-        #endregion
 
+        /// <summary>
+        /// Retrieves basic profile information for the current user.
+        /// </summary>
+        /// <returns>
+        /// <c>200 OK</c> with user profile data;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
         //  GET api/Profile/me
         [HttpGet("me")]
         public async Task<IActionResult> GetMe()
@@ -158,7 +203,16 @@ namespace auctionbay_backend.Controllers
             });
 
         }
-
+        /// <summary>
+        /// Updates the current user's profile fields.
+        /// </summary>
+        /// <param name="dto">DTO containing fields to update.</param>
+        /// <returns>
+        /// <c>200 OK</c> with updated profile;
+        /// <c>401 Unauthorized</c> if not authenticated;
+        /// <c>409 Conflict</c> if email is already taken;
+        /// <c>400 Bad Request</c> on other validation errors.
+        /// </returns>
         //  PUT api/Profile/me
         [HttpPut("me")]
         public async Task<IActionResult> UpdateMe([FromBody] UpdateProfileDto dto)
@@ -196,7 +250,15 @@ namespace auctionbay_backend.Controllers
                 profilePictureUrl = user.ProfilePictureUrl
             });
         }
-
+        /// <summary>
+        /// Changes the current user's password.
+        /// </summary>
+        /// <param name="dto">DTO containing current, new, and confirm passwords.</param>
+        /// <returns>
+        /// <c>200 OK</c> with confirmation message;
+        /// <c>400 Bad Request</c> if passwords mismatch or change fails;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
         //  PUT api/Profile/update-password
         [HttpPut("update-password")]
         public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto dto)
@@ -218,7 +280,13 @@ namespace auctionbay_backend.Controllers
                 message = "Password updated."
             });
         }
-
+        /// <summary>
+        /// Retrieves the list of auctions created by the current user.
+        /// </summary>
+        /// <returns>
+        /// <c>200 OK</c> with a list of auctions;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
         //  GET api/Profile/auctions
         [HttpGet("auctions")]
         public async Task<IActionResult> GetMyAuctions()
@@ -229,7 +297,14 @@ namespace auctionbay_backend.Controllers
             var auctions = await _auctionService.GetAuctionsByUserAsync(user.Id);
             return Ok(auctions);
         }
-
+        /// <summary>
+        /// Creates a new auction under the current user's profile.
+        /// </summary>
+        /// <param name="dto">DTO containing auction creation details.</param>
+        /// <returns>
+        /// <c>200 OK</c> with the created auction DTO;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
         //  POST api/Profile/auction
         [HttpPost("auction")]
         public async Task<IActionResult> CreateAuction([FromBody] AuctionCreateDto dto)
@@ -240,6 +315,13 @@ namespace auctionbay_backend.Controllers
             var auction = await _auctionService.CreateAuctionAsync(user.Id, dto);
             return Ok(auction);
         }
+        /// <summary>
+        /// Retrieves auctions on which the current user has placed bids.
+        /// </summary>
+        /// <returns>
+        /// <c>200 OK</c> with a list of bidding auctions;
+        /// <c>401 Unauthorized</c> if not authenticated.
+        /// </returns>
 
         /* GET  api/Profile/bidding  – auctions im currently bidding on */
         [HttpGet("bidding")]

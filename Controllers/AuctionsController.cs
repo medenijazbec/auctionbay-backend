@@ -17,14 +17,19 @@ namespace auctionbay_backend.Controllers
     [Route("api/[controller]")]
     public class AuctionsController : ControllerBase
     {
+
+        /// <summary>
+        /// Controller for handling public auction operations: listing, detail retrieval,
+        /// creation of new auctions, and bidding.
+        /// </summary>
         private readonly IAuctionService _svc;
         private readonly UserManager<ApplicationUser> _um;
         private readonly IWebHostEnvironment _env;
 
         public AuctionsController(
-            IAuctionService svc,
-            UserManager<ApplicationUser> um,
-            IWebHostEnvironment env)
+          IAuctionService svc,
+          UserManager<ApplicationUser> um,
+          IWebHostEnvironment env)
         {
             _svc = svc;
             _um = um;
@@ -32,30 +37,46 @@ namespace auctionbay_backend.Controllers
         }
 
         /* ───────── helpers ───────── */
+
+        /// <summary>
+        /// Retrieves the current authenticated user from JWT claims.
+        /// </summary>
+        /// <returns>An ApplicationUser if authenticated, otherwise null.</returns>
         private Task<ApplicationUser?> CurrentUserAsync()
         {
             var id = User.FindFirstValue("id") ??
-                     User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return id is null
-                ? Task.FromResult<ApplicationUser?>(null)
-                : _um.FindByIdAsync(id);
+              User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return id is null ?
+              Task.FromResult<ApplicationUser?>(null) :
+              _um.FindByIdAsync(id);
         }
 
-
+        /// <summary>
+        /// Returns a paginated list of active auctions (card DTOs).
+        /// Includes user context to indicate if the auction is favored or bid on by them.
+        /// </summary>
+        /// <param name="page">Page number (1-based).</param>
+        /// <param name="pageSize">Number of items per page.</param>
+        /// <returns>List of AuctionCardDto wrapped in pagination.</returns>
         /* ───────────────────────────────────────────────── */
         /*  LIST ( card DTOs )                              */
         /*  GET /api/Auctions?page=&pageSize=               */
         /* ───────────────────────────────────────────────── */
         [HttpGet]
         public async Task<IActionResult> Active(
-            [FromQuery] int page = 1, [FromQuery] int pageSize = 9)
+          [FromQuery] int page = 1, [FromQuery] int pageSize = 9)
         {
             var user = await CurrentUserAsync();
             var rows = await _svc.GetActiveAuctionsAsync(
-                           page, pageSize, user?.Id);
+              page, pageSize, user?.Id);
             return Ok(rows);
         }
 
+        /// <summary>
+        /// Retrieves full details for a single auction, optionally including user-specific info.
+        /// </summary>
+        /// <param name="id">Auction ID.</param>
+        /// <returns>Detailed AuctionDto or 404 if not found.</returns>
         /* ───────────────────────────────────────────────── */
         /*  DETAIL ( full DTO )                             */
         /* ───────────────────────────────────────────────── */
@@ -67,23 +88,27 @@ namespace auctionbay_backend.Controllers
             return dto is null ? NotFound() : Ok(dto);
         }
 
-
-
+        /// <summary>
+        /// Creates a new auction from multipart form data, saving optional images and thumbnails.
+        /// Requires authentication.
+        /// </summary>
+        /// <param name="form">Form data including title, description, pricing, dates, and files.</param>
+        /// <returns>201 Created with Location header pointing to detail endpoint.</returns>
         /* ───────── CREATE AUCTION ───────── */
         [HttpPost]
         [Authorize]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] AuctionCreateFormDto form)
         {
-
-
-
-                        var user = await CurrentUserAsync();
+            var user = await CurrentUserAsync();
             if (user is null) return Unauthorized();
 
-
-               const long MAX_BYTES = 10 * 1024 * 1024;
-            var allowed = new[] { "image/jpeg", "image/png", "image/gif" };
+            const long MAX_BYTES = 10 * 1024 * 1024;
+            var allowed = new[] {
+        "image/jpeg",
+        "image/png",
+        "image/gif"
+      };
 
             var imagesFolder = Path.Combine(_env.WebRootPath, "images");
             Directory.CreateDirectory(imagesFolder);
@@ -91,30 +116,41 @@ namespace auctionbay_backend.Controllers
             /* 1. store image (optional) */
             var imgUrl = string.Empty;
             string thumbnailUrl = "";
-            if (form.Image is { Length: > 0 })
+            if (form.Image is
+                {
+                    Length: > 0
+                })
             {
                 //size/type checks ---
                 if (form.Image.Length > MAX_BYTES || !allowed.Contains(form.Image.ContentType))
-                return BadRequest(new { error = "Invalid image upload." });
+                    return BadRequest(new
+                    {
+                        error = "Invalid image upload."
+                    });
                 //end checks ---
 
-                                var folder = Path.Combine(_env.WebRootPath, "images");
+                var folder = Path.Combine(_env.WebRootPath, "images");
                 Directory.CreateDirectory(folder);
 
                 var name = $"{Guid.NewGuid():N}{Path.GetExtension(form.Image.FileName)}";
-                await using var fs = System.IO.File.Create(Path.Combine(folder, name));
+                await using
+                var fs = System.IO.File.Create(Path.Combine(folder, name));
                 await form.Image.CopyToAsync(fs);
                 imgUrl = $"/images/{name}";
             }
 
             // handle the thumbnail upload the same way
-                if (form.Thumbnail is { Length: > 0 })
+            if (form.Thumbnail is
                 {
+                    Length: > 0
+                })
+            {
                 var thumbName = $"{Guid.NewGuid():N}{Path.GetExtension(form.Thumbnail.FileName)}";
-                await using var ts = System.IO.File.Create(Path.Combine(imagesFolder, thumbName));
+                await using
+                var ts = System.IO.File.Create(Path.Combine(imagesFolder, thumbName));
                 await form.Thumbnail.CopyToAsync(ts);
                 thumbnailUrl = $"/images/{thumbName}";
-                }
+            }
 
             /* 2. forward to service */
             var dto = new AuctionCreateDto
@@ -132,10 +168,19 @@ namespace auctionbay_backend.Controllers
 
             // point Location header to the *detail* endpoint
             return CreatedAtAction(nameof(GetDetail),
-                                   new { id = created.AuctionId },
-                                   created);
+              new
+              {
+                  id = created.AuctionId
+              },
+              created);
         }
 
+        /// <summary>
+        /// Places a bid on an existing auction. Requires authentication.
+        /// </summary>
+        /// <param name="id">Auction ID.</param>
+        /// <param name="dto">Bid details (amount, etc.).</param>
+        /// <returns>Result of bid operation.</returns>
         /* ───────── PLACE BID ───────── */
         [HttpPost("{id:int}/bid")]
         [Authorize]
@@ -147,7 +192,6 @@ namespace auctionbay_backend.Controllers
             var res = await _svc.PlaceBidAsync(user.Id, id, dto);
             return Ok(res);
         }
-
 
     }
 }

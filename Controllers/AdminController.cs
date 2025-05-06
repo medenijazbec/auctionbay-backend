@@ -20,6 +20,11 @@ namespace auctionbay_backend.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
+        /// <summary>
+        /// Controller for administrative actions on users and auctions.
+        /// Accessible only to users in the "Admin" role.
+        /// </summary>
+
         private readonly UserManager<ApplicationUser> _users;
         private readonly ApplicationDbContext _db;
         private readonly IAuctionService _auctionsSvc;
@@ -36,6 +41,14 @@ namespace auctionbay_backend.Controllers
             _auctionsSvc = auctionsSvc;
             _logger = logger;
         }
+
+        /// <summary>
+        /// Searches and paginates users based on optional search term (email, first name, or last name).
+        /// </summary>
+        /// <param name="search">Optional search filter.</param>
+        /// <param name="page">Page number (1-based).</param>
+        /// <param name="pageSize">Number of items per page.</param>
+        /// <returns>Paged list of users matching the search criteria.</returns>
 
         // GET api/Admin/users?search=&page=&pageSize=
         [HttpGet("users")]
@@ -79,6 +92,12 @@ namespace auctionbay_backend.Controllers
             });
         }
 
+        /// <summary>
+        /// Retrieves detailed information for a specific user, including their auctions.
+        /// </summary>
+        /// <param name="id">User ID.</param>
+        /// <returns>User details and list of auctions they created.</returns>
+
         // GET api/Admin/users/{id}
         [HttpGet("users/{id}")]
         public async Task<IActionResult> GetUserDetail(string id)
@@ -100,6 +119,13 @@ namespace auctionbay_backend.Controllers
 
             return Ok(dto);
         }
+
+        /// <summary>
+        /// Updates user profile information. Ensures email uniqueness and logs errors if update fails.
+        /// </summary>
+        /// <param name="id">User ID.</param>
+        /// <param name="dto">Updated user data.</param>
+        /// <returns>NoContent on success, or appropriate error status.</returns>
 
         // PUT api/Admin/users/{id}
         [HttpPut("users/{id}")]
@@ -143,6 +169,13 @@ namespace auctionbay_backend.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Soft-deletes a user by updating their record (implementation detail may vary).
+        /// Logs error if update fails.
+        /// </summary>
+        /// <param name="id">User ID.</param>
+        /// <returns>NoContent on success, or appropriate error status.</returns>
+
         // DELETE api/Admin/users/{id}
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(string id)
@@ -166,6 +199,12 @@ namespace auctionbay_backend.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Retrieves all auctions created by a specific user.
+        /// </summary>
+        /// <param name="id">User ID.</param>
+        /// <returns>List of auctions belonging to the user.</returns>
+
         // GET api/Admin/users/{id}/auctions
         [HttpGet("users/{id}/auctions")]
         public async Task<IActionResult> GetUserAuctions(string id)
@@ -174,6 +213,14 @@ namespace auctionbay_backend.Controllers
             var list = await _auctionsSvc.GetAuctionsByUserAsync(id);
             return Ok(list);
         }
+
+        /// <summary>
+        /// Searches and paginates auctions based on optional search term (title or description).
+        /// </summary>
+        /// <param name="search">Optional search filter.</param>
+        /// <param name="page">Page number (1-based).</param>
+        /// <param name="pageSize">Number of items per page.</param>
+        /// <returns>Paged list of auctions matching the search criteria.</returns>
 
         // GET api/Admin/auctions?search=&page=&pageSize=
         [HttpGet("auctions")]
@@ -218,6 +265,12 @@ namespace auctionbay_backend.Controllers
             });
         }
 
+        /// <summary>
+        /// Retrieves detailed information for a specific auction by its ID.
+        /// </summary>
+        /// <param name="id">Auction ID.</param>
+        /// <returns>Full auction detail DTO.</returns>
+
         // GET api/Admin/auctions/{id}
         [HttpGet("auctions/{id:int}")]
         public async Task<IActionResult> GetAuction(int id)
@@ -226,6 +279,13 @@ namespace auctionbay_backend.Controllers
             if (dto == null) return NotFound();
             return Ok(dto);
         }
+
+        /// <summary>
+        /// Updates an existing auction's fields and returns the updated DTO.
+        /// </summary>
+        /// <param name="id">Auction ID.</param>
+        /// <param name="dto">Updated auction data.</param>
+        /// <returns>Updated auction DTO.</returns>
 
         // PUT api/Admin/auctions/{id}
         [HttpPut("auctions/{id:int}")]
@@ -251,6 +311,12 @@ namespace auctionbay_backend.Controllers
             var updated = await _auctionsSvc.GetAuctionAsync(id);
             return Ok(updated);
         }
+
+        /// <summary>
+        /// Permanently deletes an auction by its ID.
+        /// </summary>
+        /// <param name="id">Auction ID.</param>
+        /// <returns>NoContent on success, or NotFound if auction does not exist.</returns>
 
         // DELETE api/Admin/auctions/{id}
         [HttpDelete("auctions/{id:int}")]

@@ -22,8 +22,14 @@ namespace auctionbay_backend.Services
             _dbContext = dbContext;
             _notif = notificationService;
         }
+        /// <summary>
+        /// Determines the auction state for a given user context (e.g., winning, outbid).
+        /// </summary>
+        /// <param name="a">Auction entity to evaluate.</param>
+        /// <param name="userId">Optional user identifier for personalized state.</param>
+        /// <returns>String representing auction state: "done", "winning", "outbid", or "inProgress".</returns>
         private static string CalculateState(
-            Auction a, string? userId)
+          Auction a, string? userId)
         {
             if (a.EndDateTime <= DateTime.UtcNow)
                 return "done";
@@ -35,12 +41,17 @@ namespace auctionbay_backend.Services
             if (!bidsByUser.Any()) return "inProgress";
 
             var highest = a.Bids.OrderByDescending(b => b.Amount)
-                                .FirstOrDefault();
+              .FirstOrDefault();
             return highest?.UserId == userId ? "winning" : "outbid";
         }
-
+        /// <summary>
+        /// Maps an Auction entity to a response DTO including user-specific info.
+        /// </summary>
+        /// <param name="a">The auction entity.</param>
+        /// <param name="userId">Optional user context for state and bid inclusion.</param>
+        /// <returns>Populated <see cref="AuctionResponseDto"/>.</returns>
         private static AuctionResponseDto ToDto(
-            Auction a, string? userId)
+          Auction a, string? userId)
         {
             var state = CalculateState(a, userId);
             return new AuctionResponseDto
@@ -56,19 +67,26 @@ namespace auctionbay_backend.Services
                 CreatedAt = a.CreatedAt,
                 MainImageUrl = a.MainImageUrl,
                 ThumbnailUrl = a.ThumbnailUrl,
-                CurrentHighestBid = a.Bids.Any()
-                                    ? a.Bids.Max(b => b.Amount)
-                                    : a.StartingPrice,
-                TimeLeft = a.EndDateTime > DateTime.UtcNow
-                                    ? a.EndDateTime - DateTime.UtcNow
-                                    : TimeSpan.Zero,
+                CurrentHighestBid = a.Bids.Any() ?
+                a.Bids.Max(b => b.Amount) :
+                a.StartingPrice,
+                TimeLeft = a.EndDateTime > DateTime.UtcNow ?
+                a.EndDateTime - DateTime.UtcNow :
+                TimeSpan.Zero,
                 /* light list keeps bids only for owner cards */
                 Bids = a.Bids.Select(b => new BidDto
-                { Amount = b.Amount }).ToList()
+                {
+                    Amount = b.Amount
+                }).ToList()
             };
         }
 
-
+        /// <summary>
+        /// Creates a new auction record in the database.
+        /// </summary>
+        /// <param name="userId">Identifier of the auction creator.</param>
+        /// <param name="dto">DTO containing creation details.</param>
+        /// <returns>The created auction as <see cref="AuctionResponseDto"/>.</returns>
         public async Task<AuctionResponseDto> CreateAuctionAsync(string userId, AuctionCreateDto dto)
         {
             var auction = new Auction
@@ -89,7 +107,14 @@ namespace auctionbay_backend.Services
             await _dbContext.SaveChangesAsync();
             return MapAuctionToResponseDto(auction);
         }
-
+        /// <summary>
+        /// Updates an existing auction if authorized by the creator.
+        /// </summary>
+        /// <param name="userId">User requesting the update.</param>
+        /// <param name="auctionId">Identifier of the auction.</param>
+        /// <param name="dto">DTO containing updated fields.</param>
+        /// <returns>The updated auction as <see cref="AuctionResponseDto"/>.</returns>
+        /// <exception cref="Exception">Thrown if not found or unauthorized.</exception>
         public async Task<AuctionResponseDto> UpdateAuctionAsync(string userId, int auctionId, AuctionUpdateDto dto)
         {
             var auction = await _dbContext.Auctions.FirstOrDefaultAsync(a => a.AuctionId == auctionId);
@@ -112,7 +137,14 @@ namespace auctionbay_backend.Services
             await _dbContext.SaveChangesAsync();
             return MapAuctionToResponseDto(auction);
         }
-
+        /// <summary>
+        /// Places a bid on an auction, enforcing bidding rules and notifying previous top bidder.
+        /// </summary>
+        /// <param name="userId">User placing the bid.</param>
+        /// <param name="auctionId">Target auction identifier.</param>
+        /// <param name="dto">DTO containing bid amount.</param>
+        /// <returns>The placed bid as <see cref="BidDto"/>.</returns>
+        /// <exception cref="Exception">Thrown on invalid auction or bid amount.</exception>
         public async Task<BidDto> PlaceBidAsync(string userId, int auctionId, BidDto dto)
         {
             var auction = await _dbContext.Auctions.FirstOrDefaultAsync(a => a.AuctionId == auctionId);
@@ -124,9 +156,9 @@ namespace auctionbay_backend.Services
             //Enforce bidding rules: the bid must be at least 1 unit higher than the current highest bid,
             //or at least equal to the starting price if no bids exist.
             var highestBid = await _dbContext.Bids
-                .Where(b => b.AuctionId == auctionId)
-                .OrderByDescending(b => b.Amount)
-                .FirstOrDefaultAsync();
+              .Where(b => b.AuctionId == auctionId)
+              .OrderByDescending(b => b.Amount)
+              .FirstOrDefaultAsync();
 
             decimal minimumBid = highestBid != null ? highestBid.Amount + 1 : auction.StartingPrice;
             if (dto.Amount < minimumBid)
@@ -145,52 +177,58 @@ namespace auctionbay_backend.Services
             _dbContext.Bids.Add(bid);
             await _dbContext.SaveChangesAsync();
 
-
             //  — notify the previous top bidder that they've been outbid
             if (highestBid != null && highestBid.UserId != userId)
             {
-            await _notif.CreateAsync(new Notification
-            {
-                UserId = highestBid.UserId,
-                AuctionId = auctionId,
-                Kind = "outbid",
-                Title = auction.Title,
-                Timestamp = DateTime.UtcNow
+                await _notif.CreateAsync(new Notification
+                {
+                    UserId = highestBid.UserId,
+                    AuctionId = auctionId,
+                    Kind = "outbid",
+                    Title = auction.Title,
+                    Timestamp = DateTime.UtcNow
                 });
             }
 
-
-
-            return new BidDto { Amount = bid.Amount };
+            return new BidDto
+            {
+                Amount = bid.Amount
+            };
         }
         //could also hook here into auction-completion logic and call _notif.CreateAsync
         //willdo if first impl doesnt wrk
 
-
-
-
-
+        /// <summary>
+        /// Retrieves a paginated list of active auctions for public listing.
+        /// </summary>
+        /// <param name="page">Page index (1-based).</param>
+        /// <param name="pageSize">Number of items per page.</param>
+        /// <returns>Collection of <see cref="AuctionResponseDto"/>.</returns>
 
         //Updated GetActiveAuctionsAsync method with pagination
         public async Task<IEnumerable<AuctionResponseDto>> GetActiveAuctionsAsync(int page, int pageSize)
         {
             var auctions = await _dbContext.Auctions
-                .Include(a => a.Bids)
-                .Where(a => a.AuctionState == "Active" && a.EndDateTime > DateTime.UtcNow)
-                .OrderBy(a => a.EndDateTime)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+              .Include(a => a.Bids)
+              .Where(a => a.AuctionState == "Active" && a.EndDateTime > DateTime.UtcNow)
+              .OrderBy(a => a.EndDateTime)
+              .Skip((page - 1) * pageSize)
+              .Take(pageSize)
+              .ToListAsync();
             return auctions.Select(a => MapAuctionToResponseDto(a));
         }
-
+        /// <summary>
+        /// Retrieves all auctions created by a specific user.
+        /// </summary>
+        /// <param name="userId">Creator's user identifier.</param>
+        /// <returns>Collection of <see cref="AuctionResponseDto"/>.</returns>
         public async Task<IEnumerable<AuctionResponseDto>> GetAuctionsByUserAsync(string userId)
         {
             var auctions = await _dbContext.Auctions
-                .Include(a => a.Bids)
-                .Where(a => a.CreatedBy == userId)
-                .OrderByDescending(a => a.CreatedAt)
-                .ToListAsync();
+              .Include(a => a.Bids)
+              .Where(a => a.CreatedBy == userId)
+              .OrderByDescending(a => a.CreatedAt)
+              .ToListAsync();
             return auctions.Select(a => MapAuctionToResponseDto(a));
         }
 
@@ -211,7 +249,10 @@ namespace auctionbay_backend.Services
                 ThumbnailUrl = auction.ThumbnailUrl,
                 CurrentHighestBid = auction.Bids.Any() ? auction.Bids.Max(b => b.Amount) : auction.StartingPrice,
                 TimeLeft = auction.EndDateTime > DateTime.UtcNow ? auction.EndDateTime - DateTime.UtcNow : TimeSpan.Zero,
-                Bids = auction.Bids.Select(b => new BidDto { Amount = b.Amount }).ToList()
+                Bids = auction.Bids.Select(b => new BidDto
+                {
+                    Amount = b.Amount
+                }).ToList()
             };
         }
 
@@ -231,63 +272,70 @@ namespace auctionbay_backend.Services
                 CreatedAt = auction.CreatedAt,
                 MainImageUrl = auction.MainImageUrl,
                 CurrentHighestBid = auction.Bids.Any() ? auction.Bids.Max(b => b.Amount) : auction.StartingPrice,
-                TimeLeft = auction.EndDateTime > DateTime.UtcNow
-                                          ? auction.EndDateTime - DateTime.UtcNow
-                                          : TimeSpan.Zero,
+                TimeLeft = auction.EndDateTime > DateTime.UtcNow ?
+                auction.EndDateTime - DateTime.UtcNow :
+                TimeSpan.Zero,
 
                 //full bid info
                 Bids = auction.Bids
-                                          .OrderByDescending(b => b.CreatedDateTime)
-                                          .Select(b => new BidDto
-                                          {
-                                              Amount = b.Amount,
-                                              CreatedDateTime = b.CreatedDateTime,
-                                              UserName = b.User.FirstName + " " + b.User.LastName,
-                                              ProfilePictureUrl = b.User.ProfilePictureUrl
-                                          })
-                                          .ToList()
+                .OrderByDescending(b => b.CreatedDateTime)
+                .Select(b => new BidDto
+                {
+                    Amount = b.Amount,
+                    CreatedDateTime = b.CreatedDateTime,
+                    UserName = b.User.FirstName + " " + b.User.LastName,
+                    ProfilePictureUrl = b.User.ProfilePictureUrl
+                })
+                .ToList()
             };
         }
+
+        /// <summary>
+        /// Retrieves detailed auction info including bidder names and pictures.
+        /// </summary>
+        /// <param name="id">Auction identifier.</param>
+        /// <param name="userId">Optional viewer user ID.
+        /// </param>
+        /// <returns>Detailed <see cref="AuctionResponseDto"/> or null if not found.</returns>
         public async Task<AuctionResponseDto?> GetAuctionDetailAsync(int auctionId)
         {
             var a = await _dbContext.Auctions
-                                    .Include(x => x.Bids)
-                                    .ThenInclude(b => b.User)
-                                    .FirstOrDefaultAsync(x => x.AuctionId == auctionId);
+              .Include(x => x.Bids)
+              .ThenInclude(b => b.User)
+              .FirstOrDefaultAsync(x => x.AuctionId == auctionId);
             if (a == null) return null;
             return MapAuctionToDetailDto(a);
         }
-
 
         //Services/AuctionService.cs   (add GetAuctionAsync)
         public async Task<AuctionResponseDto?> GetAuctionAsync(int auctionId)
         {
             var a = await _dbContext.Auctions
-                                    .Include(x => x.Bids)
-                                    .FirstOrDefaultAsync(x => x.AuctionId == auctionId);
+              .Include(x => x.Bids)
+              .FirstOrDefaultAsync(x => x.AuctionId == auctionId);
             return a is null ? null : MapAuctionToResponseDto(a);
         }
 
-        public async Task<AuctionResponseDto?>GetAuctionDetailAsync(int id, string? userId = null)
+        public async Task<AuctionResponseDto?> GetAuctionDetailAsync(int id, string? userId = null)
         {
             var a = await _dbContext.Auctions
-                             .Include(x => x.Bids)
-                             .ThenInclude(b => b.User)
-                             .FirstOrDefaultAsync(x => x.AuctionId == id);
+              .Include(x => x.Bids)
+              .ThenInclude(b => b.User)
+              .FirstOrDefaultAsync(x => x.AuctionId == id);
 
             if (a is null) return null;
 
             /* richer DTO with bidder names + pics */
             var dto = ToDto(a, userId);
             dto.Bids = a.Bids.OrderByDescending(b => b.CreatedDateTime)
-                             .Select(b => new BidDto
-                             {
-                                 Amount = b.Amount,
-                                 CreatedDateTime = b.CreatedDateTime,
-                                 UserName = b.User.FirstName + " " +
-                                                     b.User.LastName,
-                                 ProfilePictureUrl = b.User.ProfilePictureUrl
-                             }).ToList();
+              .Select(b => new BidDto
+              {
+                  Amount = b.Amount,
+                  CreatedDateTime = b.CreatedDateTime,
+                  UserName = b.User.FirstName + " " +
+                  b.User.LastName,
+                  ProfilePictureUrl = b.User.ProfilePictureUrl
+              }).ToList();
             return dto;
         }
 
@@ -298,28 +346,33 @@ namespace auctionbay_backend.Services
             var cutoff = DateTime.UtcNow.AddHours(-24);
 
             var list = await _dbContext.Auctions
-                .Include(a => a.Bids)
-                .Where(a =>
-                    // still open:
-                    (a.AuctionState == "Active" && a.EndDateTime > DateTime.UtcNow)
-                    ||
-                    // OR closed within last 24 h AND user has a bid on it
-                    (userId != null
-                     && a.EndDateTime <= DateTime.UtcNow
-                     && a.EndDateTime > cutoff
-                     && a.Bids.Any(b => b.UserId == userId)))
-                .OrderBy(a => a.EndDateTime)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+              .Include(a => a.Bids)
+              .Where(a =>
+                // still open:
+                (a.AuctionState == "Active" && a.EndDateTime > DateTime.UtcNow) ||
+                // OR closed within last 24 h AND user has a bid on it
+                (userId != null &&
+                  a.EndDateTime <= DateTime.UtcNow &&
+                  a.EndDateTime > cutoff &&
+                  a.Bids.Any(b => b.UserId == userId)))
+              .OrderBy(a => a.EndDateTime)
+              .Skip((page - 1) * pageSize)
+              .Take(pageSize)
+              .ToListAsync();
 
             return list.Select(a => ToDto(a, userId));
         }
-
+        /// <summary>
+        /// Deletes an auction if authorized and persists changes.
+        /// </summary>
+        /// <param name="userId">Requester user ID.</param>
+        /// <param name="auctionId">Auction identifier to remove.</param>
+        /// <returns>Task representing async operation.
+        /// </returns>
         public async Task DeleteAuctionAsync(string userId, int auctionId)
         {
             var auction = await _dbContext.Auctions
-                                          .FirstOrDefaultAsync(a => a.AuctionId == auctionId);
+              .FirstOrDefaultAsync(a => a.AuctionId == auctionId);
             if (auction is null)
                 throw new Exception("Auction not found.");
             if (auction.CreatedBy != userId)
@@ -328,34 +381,43 @@ namespace auctionbay_backend.Services
             _dbContext.Auctions.Remove(auction);
             await _dbContext.SaveChangesAsync();
         }
+        /// <summary>
+        /// Retrieves auctions on which a user has placed bids.
+        /// </summary>
+        /// <param name="userId">Bidder user ID.</param>
+        /// <returns>Collection of <see cref="AuctionResponseDto"/>.</returns>
         public async Task<IEnumerable<AuctionResponseDto>> GetAuctionsBiddingAsync(string userId)
         {
             var list = await _dbContext.Auctions
-                .Include(a => a.Bids)
-                .Where(a =>
-                       a.CreatedBy != userId &&                    // not my own auction
-                       a.Bids.Any(b => b.UserId == userId))        // I have at least one bid
-                .OrderBy(a => a.EndDateTime)
-                .ToListAsync();
+              .Include(a => a.Bids)
+              .Where(a =>
+                a.CreatedBy != userId && // not my own auction
+                a.Bids.Any(b => b.UserId == userId)) // I have at least one bid
+              .OrderBy(a => a.EndDateTime)
+              .ToListAsync();
 
             return list.Select(a => ToDto(a, userId));
         }
 
+        /// <summary>
+        /// Retrieves auctions won by a user based on highest bid when auction ends.
+        /// </summary>
+        /// <param name="userId">User ID of the bidder/winner.</param>
+        /// <returns>Collection of <see cref="AuctionResponseDto"/>.</returns>
         public async Task<IEnumerable<AuctionResponseDto>> GetAuctionsWonAsync(string userId)
         {
             var list = await _dbContext.Auctions
-                .Include(a => a.Bids)
-                .Where(a =>
-                       a.EndDateTime <= DateTime.UtcNow &&         // finished
-                       a.Bids.Any() &&                             // there was at least one bid
-                       a.Bids.OrderByDescending(b => b.Amount)
-                             .First().UserId == userId)            // my bid is the highest
-                .OrderByDescending(a => a.EndDateTime)
-                .ToListAsync();
+              .Include(a => a.Bids)
+              .Where(a =>
+                a.EndDateTime <= DateTime.UtcNow && // finished
+                a.Bids.Any() && // there was at least one bid
+                a.Bids.OrderByDescending(b => b.Amount)
+                .First().UserId == userId) // my bid is the highest
+              .OrderByDescending(a => a.EndDateTime)
+              .ToListAsync();
 
             return list.Select(a => ToDto(a, userId));
         }
-
 
     }
 }

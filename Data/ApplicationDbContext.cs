@@ -11,12 +11,17 @@ namespace auctionbay_backend.Data
         {
         }
 
-        // entities like Auction, Bid, etc l8r 2 be added here:
-        // public DbSet<Auction> Auctions { get; set; }
-        // public DbSet<Bid> Bids { get; set; }
-
+        /// <summary>
+        /// Gets or sets the <see cref="DbSet{Auction}"/> representing auctions in the system.
+        /// </summary>
         public DbSet<Auction> Auctions { get; set; }
+        /// <summary>
+        /// Gets or sets the <see cref="DbSet{Bid}"/> representing bids placed on auctions.
+        /// </summary>
         public DbSet<Bid> Bids { get; set; }
+        /// <summary>
+        /// Gets or sets the <see cref="DbSet{Notification}"/> representing notifications sent to users.
+        /// </summary>
         public DbSet<Notification> Notifications { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
