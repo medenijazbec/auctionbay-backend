@@ -1,3 +1,5 @@
+![logo_banner](https://github.com/user-attachments/assets/4fc7f3a5-f754-4f44-b636-ddbc82d6b1b4)
+
 # AuctionBay Backend
 
 **AuctionBay** is a robust, secure ASP.NET Core Web API backend powering a full-featured auction platform. It provides user authentication, auction management, real-time bidding, notifications, and image uploads — all exposed via clean RESTful endpoints.
