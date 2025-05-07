@@ -19,8 +19,6 @@
    - **Profile & Notifications**  
    - **Image Upload**  
 5. **Database & Migrations**  
-6. **Contributing**  
-7. **License**  
 
 ---
 
